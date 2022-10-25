@@ -1,0 +1,15 @@
+bases:
+  - ../zerok
+patchesJson6902:
+  - target:
+      version: v1
+      kind: Service
+      name: svc
+    path: service-patch.yaml
+patchesStrategicMerge:
+  - |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: dep
+    $patch: delete

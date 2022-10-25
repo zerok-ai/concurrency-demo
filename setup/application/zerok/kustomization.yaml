@@ -1,5 +1,5 @@
 bases:
-  - ../status-quo
+  - ../gke
 namespace: zerok
 nameSuffix: -app-zerok
 patchesJson6902:
@@ -9,6 +9,11 @@ patchesJson6902:
       kind: Deployment
       name: dep
     path: deployment-patch.yaml
+  - target:
+      version: v1
+      kind: Service
+      name: svc
+    path: service-patch.yaml
 patchesStrategicMerge:
   - |-
     apiVersion: monitoring.coreos.com/v1

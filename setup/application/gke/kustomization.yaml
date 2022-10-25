@@ -1,6 +1,5 @@
 bases:
   - ../base
-
 patchesJson6902:
   - target:
       group: apps
