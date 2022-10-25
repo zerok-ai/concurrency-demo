@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep
+  labels:
+    app: myapp
+    dep: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+      dep: default
+  template:
+    metadata:
+      labels:
+        app: myapp
+        dep: default
+    spec:
+      nodeSelector: {
+        role: k6
+      }
+      tolerations:
+      - key: "dedicated"
+        operator: "Equal"
+        value: "k6"
+        effect: "NoSchedule"
+      containers:
+        - name: k6-load-generator
+          image: 301129966109.dkr.ecr.us-east-2.amazonaws.com/xk6-api
+          imagePullPolicy: Always
+          ports:
+          - name: m-http
+            containerPort: 3000
+          resources: 
+            requests: 
+              cpu: 1500m
+              memory: 6000Mi
+            limits:
+              cpu: 1700m
+              memory: 7000Mi 

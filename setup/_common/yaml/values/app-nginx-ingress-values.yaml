@@ -1,0 +1,19 @@
+controller:
+  replicaCount: 1
+  nodeSelector: {
+    role: system,
+    kubernetes.io/os: linux
+  }
+  metrics:
+    enabled: true
+    serviceMonitor: 
+      enabled: true
+      additionalLabels: {
+        release: "prometheus"
+      }
+defaultBackend:
+  nodeSelector: {
+    role: system,
+    kubernetes.io/os: linux
+  }
+  

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc
+  labels:
+    app: myapp
+spec:
+  selector:
+    app: myapp
+  type: ClusterIP # LoadBalancer # NodePort # 
+  ports:
+    - protocol: TCP
+      name: m-http  
+      port: 80
+      targetPort: 3000

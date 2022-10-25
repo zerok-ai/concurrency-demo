@@ -1,0 +1,12 @@
+- op: replace
+  path: /metadata/name
+  value: dep-zerok
+# - op: replace
+#   path: /spec/template/spec/containers/0/resources
+#   value: 
+#     requests: 
+#       cpu: 155m
+#       memory: 190Mi
+#     limits:
+#       cpu: 175m
+#       memory: 220Mi 

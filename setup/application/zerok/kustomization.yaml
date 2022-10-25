@@ -1,0 +1,24 @@
+bases:
+  - ../status-quo
+namespace: zerok
+nameSuffix: -app-zerok
+patchesJson6902:
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: dep
+    path: deployment-patch.yaml
+patchesStrategicMerge:
+  - |-
+    apiVersion: monitoring.coreos.com/v1
+    kind: ServiceMonitor
+    metadata:
+      name: svcm
+    $patch: delete
+  - |-
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      name: ing
+    $patch: delete

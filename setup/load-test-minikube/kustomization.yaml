@@ -1,0 +1,4 @@
+bases:
+  - ../load-test
+resources:
+  - deployment.yaml

@@ -1,0 +1,20 @@
+
+controller:
+  hostNetwork: false
+  config:
+    syslog-endpoint: stdout
+    syslog-format: raw
+  haproxy:
+    enabled: true
+    image:
+      repository: haproxy
+      tag: 2.3.12-alpine
+  # replicaCount: 4
+  stats:
+    enabled: true
+  metrics:
+    enabled: true
+  serviceMonitor:
+    enabled: true
+    labels:
+      release: prometheus

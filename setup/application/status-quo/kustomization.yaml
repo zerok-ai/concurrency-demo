@@ -1,0 +1,7 @@
+bases:
+  - ../gke
+nameSuffix: -app
+namespace: myapp
+commonLabels:
+  app: myapp
+  dep: default

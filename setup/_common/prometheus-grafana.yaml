@@ -1,0 +1,19 @@
+prometheus:
+  prometheusSpec:
+    scrapeInterval: 5s
+    evaluationInterval: 5s
+    podMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelector: {}
+    serviceMonitorNamespaceSelector: {}
+    enableRemoteWriteReceiver: true
+
+grafana:
+  sidecar:
+    datasources:
+      defaultDatasourceEnabled: true
+    dashboards:
+      searchNamespace: ALL
+      provider:
+        allowUiUpdates: true
+
