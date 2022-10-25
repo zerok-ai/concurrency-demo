@@ -171,8 +171,21 @@ export const options = {
       duration: duration,
     },
   },
+  ext: {
+    loadimpact: {
+      apm: [
+        {
+          provider: 'prometheus',
+          remoteWriteURL: 'http://localhost:9090/api/v1/write',
+          includeDefaultMetrics: true,
+          includeTestRunId: true,
+          resampleRate: 3,
+        },
+      ],
+    },
+  }
 };
 
 export default function () {
-  http.get('http://demo.getanton.com/catalogue');
+  http.get('http://demo.getanton.com/checkout');
 }
