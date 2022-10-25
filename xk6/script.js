@@ -180,6 +180,12 @@ export const options = {
           includeDefaultMetrics: true,
           includeTestRunId: true,
           resampleRate: 3,
+          // credentials: {
+          //   // The username in HTTP basic authentication
+          //   username: "admin",
+          //   // The password in HTTP basic authentication
+          //   password: "prom-operator"
+          // }
         },
       ],
     },
