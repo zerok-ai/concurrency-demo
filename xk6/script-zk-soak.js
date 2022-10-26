@@ -1,7 +1,7 @@
 import http from 'k6/http';
-import { optionsBase } from './script.js';
+import { optionsBase, createOptions } from './script.js';
 
-export const options = optionsBase;
+export const options = createOptions('zk-soak-checkout', 'zk-soak-coupons');
 
 export function checkout() {
   // http.get('http://demo-app-zerok-soak.getanton.com/checkout');
