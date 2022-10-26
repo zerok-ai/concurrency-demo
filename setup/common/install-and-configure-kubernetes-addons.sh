@@ -1,6 +1,6 @@
 #--------- Metrics server ---------
 echo '---------------------- Installing metrics-server'
-# kubectl apply -f $setupfolder/common/yaml/cluster/metrics-server.yaml
+kubectl apply -f $setupfolder/common/yaml/cluster/metrics-server.yaml
 
 
 #--------- Kubernetes dashboard ---------

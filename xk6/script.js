@@ -200,9 +200,11 @@ export const options = {
 
 
 export function checkout() {
-  http.get('http://demo.getanton.com/checkout');
+  // http.get('http://demo.getanton.com/checkout');
+  http.get('http://svc-app.myapp.svc.cluster.local/checkout');
 }
 
 export function coupons() {
-  http.get('http://demo.getanton.com/coupons');
+  // http.get('http://demo.getanton.com/coupons');
+  http.get('http://svc-app.myapp.svc.cluster.local/coupons');
 }

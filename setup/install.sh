@@ -22,7 +22,7 @@ K6=0
 while getopts "hp:akcsd" opt
 do
    case "$opt" in
-      a ) DEFAULTS=1; SERVICES=1; K6=1 ;; # Setup everything
+      a ) INSTALL_CLUSTER=1; DEFAULTS=1; SERVICES=1; K6=1 ;; # Setup everything
       k ) K6=1 ;; # Setup K6
       c ) INSTALL_CLUSTER=1 ;; # Install cluster
       s ) SERVICES=1 ;; # Print helpFunction in case parameter is non-existent
@@ -48,7 +48,7 @@ then
 fi
 
 if [[ $DEFAULTS == 1 ]]; then
-    if [ "$clusterProvider" != "minikube" ] 
+    if [ "$clusterProvider" = "eks" ] 
     then
         echo '###################### Installing addons'
         sh $setupfolder/common/install-and-configure-kubernetes-addons.sh

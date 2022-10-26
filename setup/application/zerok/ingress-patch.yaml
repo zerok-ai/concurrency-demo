@@ -1,0 +1,14 @@
+- op: replace
+  path: /spec
+  value:
+    rules:
+      - host: demo-app-zerok.getanton.com
+        http:
+          paths:
+          - backend:
+              service:
+                name: svc-app-zerok
+                port: 
+                  number: 80
+            path: /.*
+            pathType: Prefix

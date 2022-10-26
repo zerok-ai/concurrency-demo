@@ -9,7 +9,7 @@ metadata:
     # nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
-  - host: concurrency-demo-load-generator.getanton.com
+  - host: demo-load-generator.getanton.com
     http:
       paths:
       - backend:

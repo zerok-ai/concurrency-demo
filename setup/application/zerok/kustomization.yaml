@@ -14,6 +14,12 @@ patchesJson6902:
       kind: Service
       name: svc
     path: service-patch.yaml
+  - target:
+      group: networking.k8s.io
+      version: v1
+      kind: Ingress
+      name: ing
+    path: ingress-patch.yaml
 patchesStrategicMerge:
   - |-
     apiVersion: monitoring.coreos.com/v1
