@@ -1,6 +1,6 @@
 LOCATION="us-central1"
-PROJECT_ID="zerok-dev"
-REPOSITORY="zerok-concurrency-demo-cluster"
+PROJECT_ID="black-scope-358204"
+REPOSITORY="multi-stage-demo"
 IMAGE="zerokdemo"
 TAG="latest"
 ART_Repo_URI="$LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$TAG"

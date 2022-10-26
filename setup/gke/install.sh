@@ -20,13 +20,12 @@ done
 
 if [ -z "$project" ]
 then
-#    project="black-scope-358204"
-   project="zerok-dev"
+   project="black-scope-358204"
 fi
 
 if [ -z "$cluster" ]
 then
-   cluster="zerok-concurrency-demo-cluster"
+   cluster="multi-stage-demo"
 fi
 
 #create cluster
