@@ -158,14 +158,22 @@ import { Counter, Trend } from 'k6/metrics';
 // }
 
 const initialVUs = 1000;
-const maxVUs = 2000;
+const maxVUs = 1000;
 const duration = '5m';
 
 export const options = {
   discardResponseBodies: true,
   scenarios: {
-    contacts: {
+    checkout: {
       executor: 'externally-controlled',
+      exec: 'checkout',
+      vus: initialVUs,
+      maxVUs: maxVUs,
+      duration: duration,
+    },
+    coupons: {
+      executor: 'externally-controlled',
+      exec: 'coupons',
       vus: initialVUs,
       maxVUs: maxVUs,
       duration: duration,
@@ -180,18 +188,21 @@ export const options = {
           includeDefaultMetrics: true,
           includeTestRunId: true,
           resampleRate: 3,
-          // credentials: {
-          //   // The username in HTTP basic authentication
-          //   username: "admin",
-          //   // The password in HTTP basic authentication
-          //   password: "prom-operator"
-          // }
         },
       ],
     },
   }
 };
 
-export default function () {
+// export default function () {
+//   http.get('http://demo.getanton.com/checkout');
+// }
+
+
+export function checkout() {
   http.get('http://demo.getanton.com/checkout');
+}
+
+export function coupons() {
+  http.get('http://demo.getanton.com/coupons');
 }
