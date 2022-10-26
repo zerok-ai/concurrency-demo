@@ -16,8 +16,8 @@ helm upgrade --install prom prometheus-community/kube-prometheus-stack \
 
 kubectl apply -f $setupfolder/common/yaml/cluster/monitoring-ingress.yaml
 
+# Load previously saved grafana dashboard
 $setupfolder/common/install-grafana-dashboard.sh concurrency-demo
-$setupfolder/common/install-grafana-dashboard.sh loadtest-data
 
 # install Promtail
 # helm upgrade --install promtail grafana/promtail -f $setupfolder/common/yaml/values/promtail-values.yaml -n monitoring
