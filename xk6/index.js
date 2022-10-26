@@ -7,18 +7,33 @@ const port = 3000
 const execute = require('child_process').exec
 var running = false;
 var paused = false;
-app.get('/start', (req, res) => {
+const POSSIBLE_SERVICES = ['app', 'zk', 'zk-spill', 'zk-soak'];
+
+
+
+//app, zk, zk-spill, zk-soak
+app.get('/start/:service', (req, res) => {
+    const service = req.params.service;
     if (paused && running) {
         res.send('Tests are in paused state. Try resuming them!');
         return;
     }
-    if (running) {
-        status((data) => res.send(data.toString()));
+    console.log('start/service - ' + service);
+
+    const isServiceValid = validateService(service);
+    if (!isServiceValid) {
+        res.send('Invalid service name')
         return;
     }
+
+    if (running) {
+        status(service, (data) => res.send(data.toString()));
+        return;
+    }
+
     running = true;
     try {
-        startK6();
+        startK6(service);
         res.send('Started');
     } catch (error) {
         running = false;
@@ -95,8 +110,16 @@ app.get('/scale', (req, res) => {
     }
 })
 
-app.get('/status', (req, res) => {
-    status((data) => res.send(data.toString()));
+app.get('/status/:service', (req, res) => {
+    const service = req.params.service;
+    console.log('status/service - ' + service);
+    const isServiceValid = validateService(service);
+    if (!isServiceValid) {
+        res.send('Invalid service name')
+        return;
+    }
+
+    status(service, (data) => res.send(data.toString()));
 })
 
 
@@ -105,11 +128,12 @@ app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
 
-async function startK6() {
+async function startK6(service) {
+    //app, zk, zk-spill, zk-soak
     try {
-        console.log("init test run");
+        console.log("init test run - " + service);
         // const passwdContent = await execute("cat /etc/passwd");
-        execute('sh ./run_xk6.sh', (err, stdout, stderr) => {
+        execute('sh ./run_xk6.sh ' + service, (err, stdout, stderr) => {
             console.log(err, stdout, stderr)
             if (err != null) {
                 console.log("Error occured while running");
@@ -168,8 +192,15 @@ async function scaleK6(newVUs) {
     }
 }
 
-async function status(callback) {
-    fs.readFile('./lastrun.log', function read(err, data) {
+function validateService(service) {
+    if (!service || !POSSIBLE_SERVICES.includes(service)) {
+        return false;
+    }
+    return true;
+}
+
+async function status(service, callback) {
+    fs.readFile('./lastrun-' + service + '.log', function read(err, data) {
         if (err) {
             throw err;
         }
