@@ -7,39 +7,108 @@ const port = 3000
 const execute = require('child_process').exec
 var running = false;
 var paused = false;
-const POSSIBLE_SERVICES = ['app', 'zk', 'zk-spill', 'zk-soak'];
-
+// const POSSIBLE_SERVICES = ['app', 'zk', 'zk-spill', 'zk-soak'];
+const POSSIBLE_SERVICES = {
+    'app': false,
+    'zk': false,
+    'zk_spill': false,
+    'zk_soak': false,
+};
 
 
 //app, zk, zk-spill, zk-soak
-app.get('/start/:service', (req, res) => {
+app.get('/start-concurrency-test', (req, res) => {
     const service = req.params.service;
-    if (paused && running) {
-        res.send('Tests are in paused state. Try resuming them!');
+    const queryParams = req.query;
+    const initialVUs = (queryParams.vus) ? queryParams.vus : 1000;
+    const maxVUs = (queryParams.mvus) ? queryParams.mvus : 1000;
+    const rate = (queryParams.rate) ? queryParams.rate : 220;
+    // const stages = (queryParams.stages) ? queryParams.stages : '1_300-1_400';
+
+    //SOAK -  vus=2000&mvus=2000&rate=1800&stages=2m_200-1m_250-1m_275-1m_300-2m_300
+    //SPILL - vus=2000&mvus=2000&rate=1800&stages=2m_200-1m_150-1m_125-1m_100-2m_100
+    runTestForService('zk_soak', initialVUs, maxVUs, rate, '2m_200-1m_250-1m_275-1m_300-2m_300', (data) => {
+
+    });
+
+    runTestForService('zk_spill', initialVUs, maxVUs, rate, '2m_200-1m_150-1m_125-1m_100-2m_100', (data) => {
+
+    });
+
+    res.send('started');
+})
+
+function runTestForService(service, initialVUs, maxVUs, rate, stages, callback) {
+
+    if (paused && POSSIBLE_SERVICES[service]) {
+        callback('Tests are in paused state. Try resuming them!');
         return;
     }
     console.log('start/service - ' + service);
 
     const isServiceValid = validateService(service);
     if (!isServiceValid) {
-        res.send('Invalid service name')
+        callback('Invalid service name')
         return;
     }
 
-    if (running) {
-        status(service, (data) => res.send(data.toString()));
+    if (POSSIBLE_SERVICES[service]) {
+        status(service, (data) => {
+            callback(data);
+        });
         return;
     }
 
-    running = true;
+    POSSIBLE_SERVICES[service] = true;
     try {
-        startK6(service);
-        res.send('Started');
+        startK6(service, initialVUs, maxVUs, rate, stages);
+        callback('Started');
     } catch (error) {
-        running = false;
-        res.send(error);
+        POSSIBLE_SERVICES[service] = false;
+        callback(error);
         return;
     }
+}
+
+//app, zk, zk-spill, zk-soak
+app.get('/start/:service', (req, res) => {
+    const service = req.params.service;
+    const queryParams = req.query;
+    const initialVUs = (queryParams.vus) ? queryParams.vus : 1000;
+    const maxVUs = (queryParams.mvus) ? queryParams.mvus : 1000;
+    const rate = (queryParams.rate) ? queryParams.rate : 220;
+    const stages = (queryParams.stages) ? queryParams.stages : '1_300-1_400';
+
+    runTestForService(service, initialVUs, maxVUs, rate, stages, (data) => {
+        res.send(data);
+    });
+
+    // if (paused && POSSIBLE_SERVICES[service]) {
+    //     res.send('Tests are in paused state. Try resuming them!');
+    //     return;
+    // }
+    // console.log('start/service - ' + service);
+
+    // const isServiceValid = validateService(service);
+    // if (!isServiceValid) {
+    //     res.send('Invalid service name')
+    //     return;
+    // }
+
+    // if (POSSIBLE_SERVICES[service]) {
+    //     status(service, (data) => res.send(data.toString()));
+    //     return;
+    // }
+
+    // POSSIBLE_SERVICES[service] = true;
+    // try {
+    //     startK6(service, initialVUs, maxVUs, rate, stages);
+    //     res.send('Started');
+    // } catch (error) {
+    //     POSSIBLE_SERVICES[service] = false;
+    //     res.send(error);
+    //     return;
+    // }
 })
 
 app.get('/pause', (req, res) => {
@@ -83,7 +152,9 @@ app.get('/resume', (req, res) => {
 })
 
 app.get('/reset', (req, res) => {
-    running = false;
+    Object.keys(POSSIBLE_SERVICES).map(key => {
+        POSSIBLE_SERVICES[key] = false;
+    });
     pkill.full('k6');
     res.send("Reset done");
 })
@@ -128,18 +199,19 @@ app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
 
-async function startK6(service) {
+async function startK6(service, initialVUs, maxVUs, rate, stages) {
     //app, zk, zk-spill, zk-soak
     try {
         console.log("init test run - " + service);
         // const passwdContent = await execute("cat /etc/passwd");
-        execute('sh ./run_xk6.sh ' + service, (err, stdout, stderr) => {
-            console.log(err, stdout, stderr)
-            if (err != null) {
-                console.log("Error occured while running");
-                running = false;
-            }
-        })
+        execute('sh ./run_xk6.sh ' + service + ' ' + initialVUs + ' ' + maxVUs + ' ' + rate + ' ' + stages,
+            (err, stdout, stderr) => {
+                console.log(err, stdout, stderr)
+                if (err != null) {
+                    console.log("Error occured while running");
+                    POSSIBLE_SERVICES[service] = false;
+                }
+            })
     } catch (error) {
         console.error(error.toString());
     }
@@ -193,7 +265,7 @@ async function scaleK6(newVUs) {
 }
 
 function validateService(service) {
-    if (!service || !POSSIBLE_SERVICES.includes(service)) {
+    if (!service || !Object.keys(POSSIBLE_SERVICES).includes(service)) {
         return false;
     }
     return true;

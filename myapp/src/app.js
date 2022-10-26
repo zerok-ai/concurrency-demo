@@ -8,8 +8,8 @@ const apiMetrics = require('prometheus-api-metrics');
 var indexRouter = require('./routes/index');
 var healthCheckRouter = require('./routes/hc');
 var garbageCollectorRouter = require('./routes/garbageCollectorRouter');
-var couponsRouter = require('./routes/profile');
-var checkoutRouter = require('./routes/catalogue');
+var couponsRouter = require('./routes/coupons');
+var checkoutRouter = require('./routes/checkout');
 
 var app = express();
 
