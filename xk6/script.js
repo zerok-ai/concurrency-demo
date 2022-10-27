@@ -8,10 +8,13 @@ const MAX_VUS = (__ENV.MAX_VUS) ? __ENV.MAX_VUS : 1000;
 const PROMETHEUS_REMOTE_URL = __ENV.PROMETHEUS_REMOTE_URL;
 const RATE = __ENV.RATE;
 const STAGES = __ENV.STAGES;
+const DURATION = __ENV.DURATION;
+const TIMEUNIT = __ENV.TIMEUNIT;
 
 const initialVUs = INITIAL_VUS;
 const maxVUs = MAX_VUS;
-const duration = '5m';
+const duration = DURATION;
+const timeUnit = TIMEUNIT;
 
 var scenarioStage = undefined;
 
@@ -70,18 +73,20 @@ function createScenarios() {
     exec: 'checkout',
     preAllocatedVUs: initialVUs,
     maxVUs: maxVUs,
-    timeUnit: '1m',
+    timeUnit: timeUnit,
     stages: scenarioStage,
-    startRate: 50
+    startRate: 1,
+    startTime: '0s'
   };
   const couponsScenario = {
     executor: 'ramping-arrival-rate',
     exec: 'coupons',
     preAllocatedVUs: initialVUs,
     maxVUs: maxVUs,
-    timeUnit: '1m',
+    timeUnit: timeUnit,
     stages: scenarioStage,
-    startRate: 50
+    startRate: 1,
+    startTime: '0s'
   };
 
   // const checkoutScenario = {

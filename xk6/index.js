@@ -23,22 +23,25 @@ app.get('/start-concurrency-test', (req, res) => {
     const initialVUs = (queryParams.vus) ? queryParams.vus : 1000;
     const maxVUs = (queryParams.mvus) ? queryParams.mvus : 1000;
     const rate = (queryParams.rate) ? queryParams.rate : 220;
-    // const stages = (queryParams.stages) ? queryParams.stages : '1_300-1_400';
+    const duration = (queryParams.duration) ? queryParams.duration : '5m';
+    const timeunit = (queryParams.timeunit) ? queryParams.timeunit : '1m';
+    const ssoak = (queryParams.ssoak) ? queryParams.ssoak : '1_0';
+    const sspill = (queryParams.sspill) ? queryParams.sspill : '1_0';
 
     //SOAK -  vus=2000&mvus=2000&rate=1800&stages=2m_200-1m_250-1m_275-1m_300-2m_300
     //SPILL - vus=2000&mvus=2000&rate=1800&stages=2m_200-1m_150-1m_125-1m_100-2m_100
-    runTestForService('zk_soak', initialVUs, maxVUs, rate, '2m_200-1m_250-1m_275-1m_300-2m_300', (data) => {
+    runTestForService('zk_soak', initialVUs, maxVUs, rate, ssoak, duration, timeunit, (data) => {
 
     });
 
-    runTestForService('zk_spill', initialVUs, maxVUs, rate, '2m_200-1m_150-1m_125-1m_100-2m_100', (data) => {
+    runTestForService('zk_spill', initialVUs, maxVUs, rate, sspill, duration, timeunit, (data) => {
 
     });
 
     res.send('started');
 })
 
-function runTestForService(service, initialVUs, maxVUs, rate, stages, callback) {
+function runTestForService(service, initialVUs, maxVUs, rate, stages, duration, timeunit, callback) {
 
     if (paused && POSSIBLE_SERVICES[service]) {
         callback('Tests are in paused state. Try resuming them!');
@@ -61,7 +64,7 @@ function runTestForService(service, initialVUs, maxVUs, rate, stages, callback) 
 
     POSSIBLE_SERVICES[service] = true;
     try {
-        startK6(service, initialVUs, maxVUs, rate, stages);
+        startK6(service, initialVUs, maxVUs, rate, stages, duration, timeunit);
         callback('Started');
     } catch (error) {
         POSSIBLE_SERVICES[service] = false;
@@ -78,8 +81,10 @@ app.get('/start/:service', (req, res) => {
     const maxVUs = (queryParams.mvus) ? queryParams.mvus : 1000;
     const rate = (queryParams.rate) ? queryParams.rate : 220;
     const stages = (queryParams.stages) ? queryParams.stages : '1_300-1_400';
+    const duration = (queryParams.duration) ? queryParams.duration : '5m';
+    const timeunit = (queryParams.timeunit) ? queryParams.timeunit : '1m';
 
-    runTestForService(service, initialVUs, maxVUs, rate, stages, (data) => {
+    runTestForService(service, initialVUs, maxVUs, rate, stages, duration, timeunit, (data) => {
         res.send(data);
     });
 
@@ -199,12 +204,12 @@ app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
 
-async function startK6(service, initialVUs, maxVUs, rate, stages) {
+async function startK6(service, initialVUs, maxVUs, rate, stages, duration, timeunit) {
     //app, zk, zk-spill, zk-soak
     try {
         console.log("init test run - " + service);
         // const passwdContent = await execute("cat /etc/passwd");
-        execute('sh ./run_xk6.sh ' + service + ' ' + initialVUs + ' ' + maxVUs + ' ' + rate + ' ' + stages,
+        execute('sh ./run_xk6.sh ' + service + ' ' + initialVUs + ' ' + maxVUs + ' ' + rate + ' ' + stages + ' ' + duration + ' ' + timeunit,
             (err, stdout, stderr) => {
                 console.log(err, stdout, stderr)
                 if (err != null) {
