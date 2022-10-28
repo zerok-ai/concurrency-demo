@@ -12,6 +12,7 @@ const STAGES = __ENV.STAGES;
 const DURATION = __ENV.DURATION;
 const TIMEUNIT = __ENV.TIMEUNIT;
 const SERVICE = __ENV.SERVICE;
+const CONCURRENCY = __ENV.CONCURRENCY;
 // const STAGE_TAGS = __ENV.STAGE_TAGS;
 
 const initialVUs = INITIAL_VUS;
@@ -22,10 +23,19 @@ const timeUnit = TIMEUNIT;
 var scenarioStage = undefined;
 var stageTags = {};
 var stageToRateLimit = {};
+var concurrencies = [];
 
 function parseStages() {
   if (scenarioStage) {
     return;
+  }
+
+  if (CONCURRENCY && CONCURRENCY.length > 0) {
+    const concurrencyStrings = CONCURRENCY.split('_');
+    concurrencyStrings.map(concurrencyString => {
+      concurrencies.push(parseInt(concurrencyString));
+    });
+
   }
 
   //1_300-2_300
@@ -37,7 +47,7 @@ function parseStages() {
     var duration = stage[0];
     var requestssString = stage[1];
     var requests = parseInt(requestssString);
-    var iterations = requests / 4;
+    var iterations = requests / 2;
     if (stage.length > 2) {
       var rateLimit = stage[2];
       stageToRateLimit[index + ''] = rateLimit;
@@ -68,7 +78,6 @@ function createScenarios() {
   var key = `${CHECKOUT_SCENARIO}`;
   scenarioMetrics.forEach((metric) => {
     myTrend[key] = myTrend[key] || {};
-    // myTrend[key][metric] = new Trend(`custom_${CHECKOUT_SCENARIO}_${metric}`);
     myTrend[key][metric] = new Trend(`custom_${metric}`);
   })
 
@@ -76,19 +85,8 @@ function createScenarios() {
   key = `${COUPONS_SCENARIO}`;
   scenarioMetrics.forEach((metric) => {
     myTrend[key] = myTrend[key] || {};
-    // myTrend[key][metric] = new Trend(`custom_${COUPONS_SCENARIO}_${metric}`);
     myTrend[key][metric] = new Trend(`custom_${metric}`);
   })
-
-
-
-  // const scenarioStage = [
-  //   // { duration: '1m', target: 100 },
-  //   { duration: '1m', target: 250 },
-  //   { duration: '1m', target: 400 },
-  //   { duration: '1m', target: 350 },
-  //   // { duration: '1m', target: 625 },
-  // ]
 
   const checkoutScenario = {
     executor: 'ramping-arrival-rate',
@@ -111,40 +109,6 @@ function createScenarios() {
     startTime: '0s'
   };
 
-  // const checkoutScenario = {
-  //   executor: 'constant-arrival-rate',
-  //   exec: 'checkout',
-  //   preAllocatedVUs: initialVUs,
-  //   maxVUs: maxVUs,
-  //   duration: duration,
-  //   rate: RATE,
-  //   timeUnit: '1m',
-  // };
-  // const couponsScenario = {
-  //   executor: 'constant-arrival-rate',
-  //   exec: 'coupons',
-  //   preAllocatedVUs: initialVUs,
-  //   maxVUs: maxVUs,
-  //   duration: duration,
-  //   rate: RATE,
-  //   timeUnit: '1m',
-  // };
-
-  // //Externally controlled
-  // const checkoutScenario = {
-  //   executor: 'externally-controlled',
-  //   exec: 'checkout',
-  //   vus: initialVUs,
-  //   maxVUs: maxVUs,
-  //   duration: duration,
-  // };
-  // const couponsScenario = {
-  //   executor: 'externally-controlled',
-  //   exec: 'coupons',
-  //   vus: initialVUs,
-  //   maxVUs: maxVUs,
-  //   duration: duration,
-  // };
   const scenariosMap = {};
   scenariosMap[CHECKOUT_SCENARIO] = checkoutScenario;
   scenariosMap[COUPONS_SCENARIO] = couponsScenario;
@@ -180,7 +144,9 @@ const verticalScaleCount = {
 
 function processStageIndex() {
   var stageIndex = getCurrentStageIndex();
-  myGauge.add(stageIndex);
+  if (concurrencies[stageIndex]) {
+    myGauge.add(concurrencies[stageIndex]);
+  }
   return stageIndex;
 }
 
@@ -194,7 +160,6 @@ export function checkout() {
   }
   const res = http.get('http://' + HOST + '/checkout?count=' + verticalScaleCount['checkout'], params);
   scenarioMetrics.forEach((metric) => {
-    // myTrend[CHECKOUT_SCENARIO][metric].add(res.timings[metric], { tag: `${CHECKOUT_SCENARIO}_${metric}` });
     myTrend[CHECKOUT_SCENARIO][metric].add(res.timings[metric], {});
   })
   sleep(1);
@@ -210,7 +175,6 @@ export function coupons() {
   }
   const res = http.get('http://' + HOST + '/coupons?count=' + verticalScaleCount['coupons'], params);
   scenarioMetrics.forEach((metric) => {
-    // myTrend[COUPONS_SCENARIO][metric].add(res.timings[metric], { tag: `${COUPONS_SCENARIO}_${metric}` });
     myTrend[COUPONS_SCENARIO][metric].add(res.timings[metric], {});
   })
   sleep(1);
@@ -220,8 +184,10 @@ export function teardown(data) {
   // 4. teardown code
   //SERVICE
   console.log('Tearing down test started for ' + SERVICE);
-  const fetchPromise = fetch('http://demo-load-generator.getanton.com/mark-closed/' + SERVICE);
-  fetchPromise.then(response => {
-    console.log(response);
-  });
+  scenarioMetrics.forEach((metric) => {
+    myTrend[CHECKOUT_SCENARIO][metric].add(0, {});
+    myTrend[COUPONS_SCENARIO][metric].add(0, {});
+  })
+  const res = http.get('http://demo-load-generator.getanton.com/mark-closed/' + SERVICE);
+  console.log(res);
 }
