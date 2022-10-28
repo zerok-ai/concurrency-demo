@@ -70,8 +70,10 @@ then
       kubectl apply -k zerok-spill
 
       echo ""
-      echo "--- marking the pods for soak and spill"
+      echo "--- marking the pods for soak"
       kubectl label pod -n zerok $soakPod zk-route-mark=soak --overwrite
+
+      echo "--- marking the pods for spill"
       kubectl label pod -n zerok $spillPod zk-route-mark=spill --overwrite
 
    else
