@@ -11,6 +11,7 @@ const RATE = __ENV.RATE;
 const STAGES = __ENV.STAGES;
 const DURATION = __ENV.DURATION;
 const TIMEUNIT = __ENV.TIMEUNIT;
+const SERVICE = __ENV.SERVICE;
 // const STAGE_TAGS = __ENV.STAGE_TAGS;
 
 const initialVUs = INITIAL_VUS;
@@ -47,6 +48,10 @@ function parseStages() {
   });
 }
 
+// 3200 - per API
+// 6400 - app
+// 6400/4 - pod
+
 const HOST = __ENV.HOST;
 const CHECKOUT_SCENARIO = __ENV.CHECKOUT_SCENARIO;//app-checkout, zk-checkout
 const COUPONS_SCENARIO = __ENV.COUPONS_SCENARIO;//app-coupons, zk-coupons
@@ -63,14 +68,16 @@ function createScenarios() {
   var key = `${CHECKOUT_SCENARIO}`;
   scenarioMetrics.forEach((metric) => {
     myTrend[key] = myTrend[key] || {};
-    myTrend[key][metric] = new Trend(`custom_${CHECKOUT_SCENARIO}_${metric}`);
+    // myTrend[key][metric] = new Trend(`custom_${CHECKOUT_SCENARIO}_${metric}`);
+    myTrend[key][metric] = new Trend(`custom_${metric}`);
   })
 
   //Coupons
   key = `${COUPONS_SCENARIO}`;
   scenarioMetrics.forEach((metric) => {
     myTrend[key] = myTrend[key] || {};
-    myTrend[key][metric] = new Trend(`custom_${COUPONS_SCENARIO}_${metric}`);
+    // myTrend[key][metric] = new Trend(`custom_${COUPONS_SCENARIO}_${metric}`);
+    myTrend[key][metric] = new Trend(`custom_${metric}`);
   })
 
 
@@ -187,7 +194,8 @@ export function checkout() {
   }
   const res = http.get('http://' + HOST + '/checkout?count=' + verticalScaleCount['checkout'], params);
   scenarioMetrics.forEach((metric) => {
-    myTrend[CHECKOUT_SCENARIO][metric].add(res.timings[metric], { tag: `${CHECKOUT_SCENARIO}_${metric}` });
+    // myTrend[CHECKOUT_SCENARIO][metric].add(res.timings[metric], { tag: `${CHECKOUT_SCENARIO}_${metric}` });
+    myTrend[CHECKOUT_SCENARIO][metric].add(res.timings[metric], {});
   })
   sleep(1);
 }
@@ -202,7 +210,18 @@ export function coupons() {
   }
   const res = http.get('http://' + HOST + '/coupons?count=' + verticalScaleCount['coupons'], params);
   scenarioMetrics.forEach((metric) => {
-    myTrend[COUPONS_SCENARIO][metric].add(res.timings[metric], { tag: `${COUPONS_SCENARIO}_${metric}` });
+    // myTrend[COUPONS_SCENARIO][metric].add(res.timings[metric], { tag: `${COUPONS_SCENARIO}_${metric}` });
+    myTrend[COUPONS_SCENARIO][metric].add(res.timings[metric], {});
   })
   sleep(1);
+}
+
+export function teardown(data) {
+  // 4. teardown code
+  //SERVICE
+  console.log('Tearing down test started for ' + SERVICE);
+  const fetchPromise = fetch('http://demo-load-generator.getanton.com/mark-closed/' + SERVICE);
+  fetchPromise.then(response => {
+    console.log(response);
+  });
 }

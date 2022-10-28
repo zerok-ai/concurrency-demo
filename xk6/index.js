@@ -164,6 +164,12 @@ app.get('/reset', (req, res) => {
     res.send("Reset done");
 })
 
+app.get('/mark-closed/:service', (req, res) => {
+    const service = req.params.service;
+    POSSIBLE_SERVICES[service] = false;
+    res.send("Marked for service " + service);
+})
+
 app.get('/scale', (req, res) => {
     const queryParams = req.query;
     const newVUs = queryParams.vus;
@@ -286,3 +292,4 @@ async function status(service, callback) {
         callback(template);
     });
 }
+
