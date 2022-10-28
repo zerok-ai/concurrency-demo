@@ -7,7 +7,6 @@ spec:
   workloadSelector:
     labels:
       app: myapp
-      zk-route-mark: none 
   configPatches:
   - applyTo: NETWORK_FILTER
     match:
@@ -44,22 +43,105 @@ spec:
           type_url: type.googleapis.com/envoy.extensions.filters.http.local_ratelimit.v3.LocalRateLimit
           value:
             stat_prefix: http_local_rate_limiter
-            token_bucket:
-              max_tokens: 5
-              tokens_per_fill: 5
-              fill_interval: 1s
-            filter_enabled:
-              runtime_key: local_rate_limit_enabled
-              default_value:
-                numerator: 100
-                denominator: HUNDRED
-            filter_enforced:
-              runtime_key: local_rate_limit_enforced
-              default_value:
-                numerator: 100
-                denominator: HUNDRED
-            response_headers_to_add:
-              - append: false
-                header:
-                  key: x-local-rate-limit
-                  value: 'true'
+
+  - applyTo: HTTP_ROUTE
+    match:
+      context: SIDECAR_INBOUND
+    patch:
+      operation: MERGE
+      value:
+        route:
+          rate_limits:
+            - actions:
+              - request_headers:
+                  header_name: "rate-limit"
+                  descriptor_key: "RL"
+        typed_per_filter_config:
+          envoy.filters.http.local_ratelimit:
+            "@type": type.googleapis.com/udpa.type.v1.TypedStruct
+            type_url: type.googleapis.com/envoy.extensions.filters.http.local_ratelimit.v3.LocalRateLimit
+            value:
+              stat_prefix: http_local_rate_limiter
+              descriptors:
+                - entries:
+                  - key: RL
+                    value: "1"
+                  token_bucket:
+                    max_tokens: 1
+                    tokens_per_fill: 1
+                    fill_interval: 1s
+                - entries:
+                  - key: RL
+                    value: "2"
+                  token_bucket:
+                    max_tokens: 2
+                    tokens_per_fill: 2
+                    fill_interval: 1s
+                - entries:
+                  - key: RL
+                    value: "3"
+                  token_bucket:
+                    max_tokens: 3
+                    tokens_per_fill: 3
+                    fill_interval: 1s
+                - entries:
+                  - key: RL
+                    value: "4"
+                  token_bucket:
+                    max_tokens: 4
+                    tokens_per_fill: 4
+                    fill_interval: 1s
+                - entries:
+                  - key: RL
+                    value: "5"
+                  token_bucket:
+                    max_tokens: 5
+                    tokens_per_fill: 5
+                    fill_interval: 1s
+                - entries:
+                  - key: RL
+                    value: "6"
+                  token_bucket:
+                    max_tokens: 6
+                    tokens_per_fill: 6
+                    fill_interval: 1s
+                - entries:
+                  - key: RL
+                    value: "7"
+                  token_bucket:
+                    max_tokens: 7
+                    tokens_per_fill: 7
+                    fill_interval: 1s
+                - entries:
+                  - key: RL
+                    value: "8"
+                  token_bucket:
+                    max_tokens: 8
+                    tokens_per_fill: 8
+                    fill_interval: 1s
+                - entries:
+                  - key: RL
+                    value: "9"
+                  token_bucket:
+                    max_tokens: 9
+                    tokens_per_fill: 9
+                    fill_interval: 1s
+              filter_enabled:
+                runtime_key: local_rate_limit_enabled
+                default_value:
+                  numerator: 100
+                  denominator: HUNDRED
+              filter_enforced:
+                runtime_key: local_rate_limit_enforced
+                default_value:
+                  numerator: 100
+                  denominator: HUNDRED
+              response_headers_to_add:
+                - append: false
+                  header:
+                    key: x-local-rate-limit
+                    value: 'true'
+              token_bucket:
+                max_tokens: 10
+                tokens_per_fill: 10
+                fill_interval: 1s
