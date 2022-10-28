@@ -67,7 +67,7 @@ const CHECKOUT_SCENARIO = __ENV.CHECKOUT_SCENARIO;//app-checkout, zk-checkout
 const COUPONS_SCENARIO = __ENV.COUPONS_SCENARIO;//app-coupons, zk-coupons
 
 var myTrend = {};
-var myGauge = new Gauge('stageGauge');
+var myGauge = new Gauge('concurrency');
 const scenarioMetrics = ['waiting', 'duration']
 
 function createScenarios() {
