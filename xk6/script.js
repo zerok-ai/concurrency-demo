@@ -1,8 +1,7 @@
-import http from 'k6/http';
-import { check } from 'k6';
-import { sleep } from 'k6';
-import { Gauge, Counter, Trend } from 'k6/metrics';
 import { getCurrentStageIndex } from 'https://jslib.k6.io/k6-utils/1.3.0/index.js';
+import { sleep } from 'k6';
+import http from 'k6/http';
+import { Gauge, Trend } from 'k6/metrics';
 
 const INITIAL_VUS = (__ENV.INITIAL_VUS) ? __ENV.INITIAL_VUS : 1000;
 const MAX_VUS = (__ENV.MAX_VUS) ? __ENV.MAX_VUS : 1000;

@@ -15,10 +15,8 @@ const POSSIBLE_SERVICES = {
     'zk_soak': false,
 };
 
-
 //app, zk, zk-spill, zk-soak
 app.get('/start-concurrency-test', (req, res) => {
-    const service = req.params.service;
     const queryParams = req.query;
     const initialVUs = (queryParams.vus) ? queryParams.vus : 1000;
     const maxVUs = (queryParams.mvus) ? queryParams.mvus : 1000;
@@ -31,19 +29,22 @@ app.get('/start-concurrency-test', (req, res) => {
 
     //SOAK -  vus=2000&mvus=2000&rate=1800&stages=2m_200-1m_250-1m_275-1m_300-2m_300
     //SPILL - vus=2000&mvus=2000&rate=1800&stages=2m_200-1m_150-1m_125-1m_100-2m_100
-    runTestForService('zk_soak', initialVUs, maxVUs, rate, ssoak, duration, timeunit, concurrency, (data) => {
+    var service = 'zk_soak';
+    runTestForService({ service, initialVUs, maxVUs, rate, stages: ssoak, duration, timeunit, concurrency }, (data) => {
 
     });
 
-    runTestForService('zk_spill', initialVUs, maxVUs, rate, sspill, duration, timeunit, concurrency, (data) => {
+    service = 'zk_spill';
+    runTestForService({ service, initialVUs, maxVUs, rate, stages: sspill, duration, timeunit, concurrency }, (data) => {
 
     });
 
     res.send('started');
 })
 
-function runTestForService(service, initialVUs, maxVUs, rate, stages, duration, timeunit, concurrency, callback) {
+function runTestForService(params, callback) {
 
+    const { service, initialVUs, maxVUs, rate, stages, duration, timeunit, concurrency } = params;
     if (paused && POSSIBLE_SERVICES[service]) {
         callback('Tests are in paused state. Try resuming them!');
         return;
@@ -65,7 +66,7 @@ function runTestForService(service, initialVUs, maxVUs, rate, stages, duration, 
 
     POSSIBLE_SERVICES[service] = true;
     try {
-        startK6(service, initialVUs, maxVUs, rate, stages, duration, timeunit, concurrency);
+        startK6(params);
         callback('Started');
     } catch (error) {
         POSSIBLE_SERVICES[service] = false;
@@ -86,36 +87,9 @@ app.get('/start/:service', (req, res) => {
     const timeunit = (queryParams.timeunit) ? queryParams.timeunit : '1m';
     const concurrency = (queryParams.concurrency) ? queryParams.concurrency : "";
 
-    runTestForService(service, initialVUs, maxVUs, rate, stages, duration, timeunit, concurrency, (data) => {
+    runTestForService({ service, initialVUs, maxVUs, rate, stages, duration, timeunit, concurrency }, (data) => {
         res.send(data);
     });
-
-    // if (paused && POSSIBLE_SERVICES[service]) {
-    //     res.send('Tests are in paused state. Try resuming them!');
-    //     return;
-    // }
-    // console.log('start/service - ' + service);
-
-    // const isServiceValid = validateService(service);
-    // if (!isServiceValid) {
-    //     res.send('Invalid service name')
-    //     return;
-    // }
-
-    // if (POSSIBLE_SERVICES[service]) {
-    //     status(service, (data) => res.send(data.toString()));
-    //     return;
-    // }
-
-    // POSSIBLE_SERVICES[service] = true;
-    // try {
-    //     startK6(service, initialVUs, maxVUs, rate, stages);
-    //     res.send('Started');
-    // } catch (error) {
-    //     POSSIBLE_SERVICES[service] = false;
-    //     res.send(error);
-    //     return;
-    // }
 })
 
 app.get('/pause', (req, res) => {
@@ -212,12 +186,13 @@ app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
 
-async function startK6(service, initialVUs, maxVUs, rate, stages, duration, timeunit, concurrency) {
+async function startK6(params) {
+    const { service, initialVUs, maxVUs, rate, stages, duration, timeunit, concurrency } = params;
     //app, zk, zk-spill, zk-soak
     try {
         console.log("init test run - " + service);
         // const passwdContent = await execute("cat /etc/passwd");
-        execute('sh ./run_xk6.sh ' + service + ' ' + initialVUs + ' ' + maxVUs + ' ' + rate + ' ' + stages + ' ' + duration + ' ' + timeunit + ' ' + concurrency,
+        execute(`sh ./run_xk6.sh ${service} ${initialVUs} ${maxVUs} ${rate} ${stages} ${duration} ${timeunit} ${concurrency}`,
             (err, stdout, stderr) => {
                 console.log(err, stdout, stderr)
                 if (err != null) {
