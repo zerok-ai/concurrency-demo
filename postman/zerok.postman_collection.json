@@ -1,0 +1,238 @@
+{
+	"info": {
+		"_postman_id": "3bb9f6b2-2da1-4bc6-aa9f-90e464465f5e",
+		"name": "zerok",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11578218"
+	},
+	"item": [
+		{
+			"name": "k6-status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{concurrency-test-k6-base-url}}/status/app",
+					"host": [
+						"{{concurrency-test-k6-base-url}}"
+					],
+					"path": [
+						"status",
+						"app"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "k6-reset",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{concurrency-test-k6-base-url}}/reset",
+					"host": [
+						"{{concurrency-test-k6-base-url}}"
+					],
+					"path": [
+						"reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "k6-mark-closed",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{concurrency-test-k6-base-url}}/mark-closed/zk_spill",
+					"host": [
+						"{{concurrency-test-k6-base-url}}"
+					],
+					"path": [
+						"mark-closed",
+						"zk_spill"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "k6-start",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{concurrency-test-k6-base-url}}/start/app?vus=1500&mvus=1500&rate=1800&stages=2m_3200-6m_3200&timeunit=1m",
+					"host": [
+						"{{concurrency-test-k6-base-url}}"
+					],
+					"path": [
+						"start",
+						"app"
+					],
+					"query": [
+						{
+							"key": "vus",
+							"value": "1500"
+						},
+						{
+							"key": "mvus",
+							"value": "1500"
+						},
+						{
+							"key": "rate",
+							"value": "1800"
+						},
+						{
+							"key": "stages",
+							"value": "2m_3200-6m_3200"
+						},
+						{
+							"key": "timeunit",
+							"value": "1m"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "k6-start-concurrency-test",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{concurrency-test-k6-base-url}}/start-concurrency-test?vus=500&mvus=500&timeunit=1m&ssoak=2m_800-6m_800&sspill=2m_800-6m_800",
+					"host": [
+						"{{concurrency-test-k6-base-url}}"
+					],
+					"path": [
+						"start-concurrency-test"
+					],
+					"query": [
+						{
+							"key": "vus",
+							"value": "500"
+						},
+						{
+							"key": "mvus",
+							"value": "500"
+						},
+						{
+							"key": "timeunit",
+							"value": "1m"
+						},
+						{
+							"key": "ssoak",
+							"value": "2m_800-6m_800"
+						},
+						{
+							"key": "sspill",
+							"value": "2m_800-6m_800"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "k6-options",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{concurrency-test-k6-base-url}}/options",
+					"host": [
+						"{{concurrency-test-k6-base-url}}"
+					],
+					"path": [
+						"options"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "k6-resume",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{concurrency-test-k6-base-url}}/resume",
+					"host": [
+						"{{concurrency-test-k6-base-url}}"
+					],
+					"path": [
+						"resume"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "k6-pause",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{concurrency-test-k6-base-url}}/pause",
+					"host": [
+						"{{concurrency-test-k6-base-url}}"
+					],
+					"path": [
+						"pause"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "k6-scale",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{concurrency-test-k6-base-url}}/scale?vus=500",
+					"host": [
+						"{{concurrency-test-k6-base-url}}"
+					],
+					"path": [
+						"scale"
+					],
+					"query": [
+						{
+							"key": "vus",
+							"value": "500"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

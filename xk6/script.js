@@ -47,7 +47,7 @@ function parseStages() {
     var duration = stage[0];
     var requestssString = stage[1];
     var requests = parseInt(requestssString);
-    var iterations = requests / 2;
+    var iterations = requests;
     if (stage.length > 2) {
       var rateLimit = stage[2];
       stageToRateLimit[index + ''] = rateLimit;
@@ -111,7 +111,7 @@ function createScenarios() {
 
   const scenariosMap = {};
   scenariosMap[CHECKOUT_SCENARIO] = checkoutScenario;
-  scenariosMap[COUPONS_SCENARIO] = couponsScenario;
+  // scenariosMap[COUPONS_SCENARIO] = couponsScenario;
 
   return scenariosMap;
 }
