@@ -110,12 +110,13 @@ function createScenarios() {
 
   const scenariosMap = {};
   scenariosMap[CHECKOUT_SCENARIO] = checkoutScenario;
-  // scenariosMap[COUPONS_SCENARIO] = couponsScenario;
+  scenariosMap[COUPONS_SCENARIO] = couponsScenario;
 
   return scenariosMap;
 }
 
 export const options = {
+  noConnectionReuse: true,
   discardResponseBodies: true,
   scenarios: createScenarios(),
   ext: {

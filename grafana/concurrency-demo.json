@@ -29,7 +29,7 @@
   "liveNow": true,
   "panels": [
     {
-      "collapsed": true,
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -37,47 +37,8 @@
         "y": 0
       },
       "id": 65,
-      "panels": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "gridPos": {
-            "h": 3,
-            "w": 19,
-            "x": 0,
-            "y": 1
-          },
-          "id": 66,
-          "options": {
-            "code": {
-              "language": "plaintext",
-              "showLineNumbers": false,
-              "showMiniMap": false
-            },
-            "content": "\n\n<br>\n  <a \n     href=\"http://demo-load-generator.getanton.com/status/zk_soak\"\n     target=\"_blank\"\n     style=\"\n            border-radius: 7px; \n            margin: 0.25rem 0.30rem; \n            border: 1px solid;\n            text-decoration: none; \n            padding: 1rem 1.5rem; \n            width: 100px;\n            line-height: 100px;\n            font-size: 36px;\n            text-align: center\"\n     title=\"soak\">\n  🪵 soak</a>\n\n  <a \n     href=\"http://demo-load-generator.getanton.com/status/zk_spill\"\n     target=\"_blank\"\n     style=\"\n            border-radius: 7px; \n            margin: 0.25rem 0.30rem; \n            border: 1px solid;\n            text-decoration: none; \n            padding: 1rem 1.5rem; \n            width: 100px;\n            line-height: 100px;\n            font-size: 36px;\n            text-align: center\"\n     title=\"spill\">\n  🪵 spill</a>\n\n  <a \n     href=\"http://demo-load-generator.getanton.com/status/app\"\n     target=\"_blank\"\n     style=\"\n            border-radius: 7px; \n            margin: 0.25rem 0.30rem; \n            border: 1px solid;\n            text-decoration: none; \n            padding: 1rem 1.5rem; \n            width: 100px;\n            line-height: 100px;\n            font-size: 36px;\n            text-align: center\"\n     title=\"app\">\n  🪵 app</a>\n  <a \n     href=\"http://demo-load-generator.getanton.com/reset\"\n     target=\"_blank\"\n     style=\"\n            border-radius: 7px; \n            margin: 0.25rem 0.30rem; \n            border: 1px solid;\n            text-decoration: none; \n            padding: 1rem 1.5rem; \n            width: 100px;\n            line-height: 100px;\n            font-size: 36px;\n            text-align: center\"\n     title=\"Reset the state\">\n  🔂</a>\n<!--\n<a \nhref=\"https://aax7mshw45.execute-api.us-east-2.amazonaws.com/default/shutdown\"  \ntarget=\"_blank\"\nstyle=\"\nborder-radius: 7px; \nmargin: 0.25rem 0.30rem; \nborder: 1px solid;\ntext-decoration: none; \npadding: 1rem 1.5rem; \nwidth: 100px;\nline-height: 100px;\nfont-size: 36px;\ntext-align: center\"\ntitle=\"Kill demo machines\">\n🔥</a>\n-->",
-            "mode": "html"
-          },
-          "pluginVersion": "9.2.1",
-          "transparent": true,
-          "type": "text"
-        }
-      ],
-      "title": "Debug",
-      "type": "row"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 1
-      },
-      "id": 48,
       "panels": [],
-      "title": "Stage 1 - Concurrency Test",
+      "title": "Debug",
       "type": "row"
     },
     {
@@ -87,9 +48,47 @@
       },
       "gridPos": {
         "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 66,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "\n\n<br>\n  <a \n     href=\"http://demo-load-generator.getanton.com/status/zk_soak\"\n     target=\"_blank\"\n     style=\"\n            border-radius: 7px; \n            margin: 0.25rem 0.30rem; \n            border: 1px solid;\n            text-decoration: none; \n            padding: 1rem 1.5rem; \n            width: 100px;\n            line-height: 100px;\n            font-size: 36px;\n            text-align: center\"\n     title=\"soak\">\n  🪵 soak</a>\n\n  <a \n     href=\"http://demo-load-generator.getanton.com/status/zk_spill\"\n     target=\"_blank\"\n     style=\"\n            border-radius: 7px; \n            margin: 0.25rem 0.30rem; \n            border: 1px solid;\n            text-decoration: none; \n            padding: 1rem 1.5rem; \n            width: 100px;\n            line-height: 100px;\n            font-size: 36px;\n            text-align: center\"\n     title=\"spill\">\n  🪵 spill</a>\n\n  <a \n     href=\"http://demo-load-generator.getanton.com/status/app\"\n     target=\"_blank\"\n     style=\"\n            border-radius: 7px; \n            margin: 0.25rem 0.30rem; \n            border: 1px solid;\n            text-decoration: none; \n            padding: 1rem 1.5rem; \n            width: 100px;\n            line-height: 100px;\n            font-size: 36px;\n            text-align: center\"\n     title=\"app\">\n  🪵 app</a>\n  <a \n     href=\"http://demo-load-generator.getanton.com/reset\"\n     target=\"_blank\"\n     style=\"\n            border-radius: 7px; \n            margin: 0.25rem 0.30rem; \n            border: 1px solid;\n            text-decoration: none; \n            padding: 1rem 1.5rem; \n            width: 100px;\n            line-height: 100px;\n            font-size: 36px;\n            text-align: center\"\n     title=\"Reset the state\">\n  🔂</a>\n<!--\n<a \nhref=\"https://aax7mshw45.execute-api.us-east-2.amazonaws.com/default/shutdown\"  \ntarget=\"_blank\"\nstyle=\"\nborder-radius: 7px; \nmargin: 0.25rem 0.30rem; \nborder: 1px solid;\ntext-decoration: none; \npadding: 1rem 1.5rem; \nwidth: 100px;\nline-height: 100px;\nfont-size: 36px;\ntext-align: center\"\ntitle=\"Kill demo machines\">\n🔥</a>\n-->",
+        "mode": "html"
+      },
+      "pluginVersion": "9.2.1",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "id": 48,
+      "panels": [],
+      "title": "Stage 1",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "h": 2,
         "w": 22,
         "x": 0,
-        "y": 2
+        "y": 5
       },
       "id": 82,
       "options": {
@@ -98,33 +97,8 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "# Concurrency Test\n\nFor markdown syntax help: [commonmark.org/help](https://commonmark.org/help/)",
+        "content": "# Concurrency Test\n\n---",
         "mode": "markdown"
-      },
-      "pluginVersion": "9.2.1",
-      "transparent": true,
-      "type": "text"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 0,
-        "y": 5
-      },
-      "id": 67,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "<br/>\n<a\n   href=\"http://demo-load-generator.getanton.com/start/app?vus=200&mvus=200&rate=1800&stages=2m_220-6m_220&timeunit=1m\"\n   style=\"\n      border-radius: 7px; \n      margin: 0.25rem; \n      border: 1px solid;\n      text-decoration: none; \n      cursor: pointer;\n      padding: 1rem 1.5rem; \n      width: 100px;\n      line-height: 10px;\n      font-size: 36px;\n      text-align: center;\"\n   >\n▶️\n</a>\n",
-        "mode": "html"
       },
       "pluginVersion": "9.2.1",
       "transparent": true,
@@ -160,13 +134,13 @@
       "gridPos": {
         "h": 3,
         "w": 2,
-        "x": 2,
-        "y": 5
+        "x": 0,
+        "y": 7
       },
       "id": 57,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
+        "colorMode": "none",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -186,7 +160,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "4",
+          "expr": "sum(count by(pod) (kube_pod_labels{namespace=\"myapp\"}))",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -203,17 +177,17 @@
       "gridPos": {
         "h": 3,
         "w": 2,
-        "x": 12,
-        "y": 5
+        "x": 2,
+        "y": 7
       },
-      "id": 83,
+      "id": 67,
       "options": {
         "code": {
           "language": "plaintext",
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "<br/>\n<a\n   href=\"http://demo-load-generator.getanton.com/start-concurrency-test?vus=300&mvus=300&timeunit=1m&ssoak=2m_640-2m_920-1m_600-1m_600-1m_840-1m_840-1m_680-2m_760&sspill=2m_640-2m_360-1m_680-1m_680-1m_440-1m_440-1m_600-2m_520\"\n   style=\"\n      border-radius: 7px; \n      margin: 0.25rem; \n      border: 1px solid;\n      text-decoration: none; \n      cursor: pointer;\n      padding: 1rem 1.5rem; \n      width: 100px;\n      line-height: 10px;\n      font-size: 36px;\n      text-align: center;\"\n   >\n▶️\n</a>\n",
+        "content": "<br/>\n<a\n   href=\"http://demo-load-generator.getanton.com/start/app?vus=200&mvus=200&rate=1800&stages=${app_traffic}&timeunit=${time_unit}\"\n   target=\"_blank\"\n   style=\"\n      border-radius: 7px; \n      margin: 0.25rem; \n      border: 1px solid;\n      text-decoration: none; \n      cursor: pointer;\n      padding: 1rem 1.5rem; \n      width: 100px;\n      line-height: 10px;\n      font-size: 36px;\n      text-align: center;\"\n   >\n▶️\n</a>\n",
         "mode": "html"
       },
       "pluginVersion": "9.2.1",
@@ -250,8 +224,8 @@
       "gridPos": {
         "h": 3,
         "w": 3,
-        "x": 14,
-        "y": 5
+        "x": 12,
+        "y": 7
       },
       "id": 58,
       "options": {
@@ -276,7 +250,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "4",
+          "expr": "sum(count by(pod) (kube_pod_labels{namespace=\"zerok\"}))",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -315,13 +289,13 @@
       "gridPos": {
         "h": 3,
         "w": 2,
-        "x": 17,
-        "y": 5
+        "x": 15,
+        "y": 7
       },
       "id": 60,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
+        "colorMode": "none",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -380,13 +354,13 @@
       "gridPos": {
         "h": 3,
         "w": 2,
-        "x": 19,
-        "y": 5
+        "x": 17,
+        "y": 7
       },
       "id": 59,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
+        "colorMode": "none",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -414,6 +388,31 @@
       ],
       "title": "Soak Pod",
       "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 19,
+        "y": 7
+      },
+      "id": 83,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<br/>\n<a\n   href=\"http://demo-load-generator.getanton.com/start-concurrency-test?vus=300&mvus=300&timeunit=${time_unit}&ssoak=${soak_traffic}&sspill=${spill_traffic}\"\n   target=\"_blank\"\n   style=\"\n      border-radius: 7px; \n      margin: 0.25rem; \n      border: 1px solid;\n      text-decoration: none; \n      cursor: pointer;\n      padding: 1rem 1.5rem; \n      width: 100px;\n      line-height: 10px;\n      font-size: 36px;\n      text-align: center;\"\n   >\n▶️\n</a>\n",
+        "mode": "html"
+      },
+      "pluginVersion": "9.2.1",
+      "transparent": true,
+      "type": "text"
     },
     {
       "datasource": {
@@ -478,7 +477,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 8
+        "y": 10
       },
       "id": 49,
       "interval": "20s",
@@ -501,24 +500,9 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum (rate(k6_http_reqs{scenario=~\"app_.*\"}[$__rate_interval]) * 60)",
+          "expr": "sum by (scenario) (k6_http_reqs{scenario=~\"app_.*\"}) / 4",
           "hide": false,
-          "legendFormat": "Service",
-          "range": true,
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "sum (rate(k6_http_reqs{scenario=~\"app_.*\"}[$__rate_interval]) * 60) / 4",
-          "format": "time_series",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "Per Pod",
+          "legendFormat": "__auto",
           "range": true,
           "refId": "B"
         }
@@ -537,7 +521,7 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
+            "axisCenteredZero": true,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
@@ -583,41 +567,16 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "soak"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 8
+        "y": 10
       },
       "id": 50,
-      "interval": "5s",
+      "interval": "1m",
       "options": {
         "legend": {
           "calcs": [],
@@ -636,9 +595,9 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "editorMode": "code",
+          "editorMode": "builder",
           "exemplar": false,
-          "expr": "sum (rate(k6_http_reqs{scenario=~\"zk_soak.*\"}[$__rate_interval])) * 60",
+          "expr": "sum(delta(k6_http_reqs{scenario=~\"zk_spill.*\"}[$__interval])) / 4",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -651,8 +610,8 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "editorMode": "code",
-          "expr": "sum (rate(k6_http_reqs{scenario=~\"zk_spill.*\"}[$__rate_interval])) * 60",
+          "editorMode": "builder",
+          "expr": "sum(delta(k6_http_reqs{scenario=~\"zk_soak.*\"}[$__interval])) / 4",
           "hide": false,
           "legendFormat": "spill",
           "range": true,
@@ -709,8 +668,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -726,7 +684,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 16
+        "y": 18
       },
       "id": 8,
       "interval": "1s",
@@ -824,7 +782,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 16
+        "y": 18
       },
       "id": 51,
       "interval": "1s",
@@ -901,7 +859,7 @@
         "h": 4,
         "w": 12,
         "x": 0,
-        "y": 24
+        "y": 26
       },
       "id": 61,
       "options": {
@@ -965,7 +923,7 @@
         "h": 4,
         "w": 12,
         "x": 12,
-        "y": 24
+        "y": 26
       },
       "id": 77,
       "options": {
@@ -1061,7 +1019,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 28
+        "y": 30
       },
       "id": 54,
       "interval": "5s",
@@ -1159,7 +1117,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 28
+        "y": 30
       },
       "id": 52,
       "interval": "5s",
@@ -1201,7 +1159,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 36
+        "y": 38
       },
       "id": 69,
       "panels": [],
@@ -1217,7 +1175,7 @@
         "h": 3,
         "w": 12,
         "x": 0,
-        "y": 37
+        "y": 39
       },
       "id": 70,
       "options": {
@@ -1242,7 +1200,7 @@
         "h": 3,
         "w": 12,
         "x": 12,
-        "y": 37
+        "y": 39
       },
       "id": 78,
       "options": {
@@ -1320,7 +1278,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 40
+        "y": 42
       },
       "id": 71,
       "interval": "20s",
@@ -1418,7 +1376,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 40
+        "y": 42
       },
       "id": 79,
       "interval": "5s",
@@ -1517,7 +1475,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 48
+        "y": 50
       },
       "id": 73,
       "interval": "1s",
@@ -1626,7 +1584,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 48
+        "y": 50
       },
       "id": 74,
       "interval": "1s",
@@ -1787,7 +1745,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 56
+        "y": 58
       },
       "id": 75,
       "interval": "5s",
@@ -1885,7 +1843,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 56
+        "y": 58
       },
       "id": 76,
       "interval": "5s",
@@ -1927,7 +1885,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 64
+        "y": 66
       },
       "id": 34,
       "panels": [],
@@ -1967,7 +1925,7 @@
         "h": 11,
         "w": 12,
         "x": 0,
-        "y": 65
+        "y": 67
       },
       "id": 36,
       "interval": "1s",
@@ -2036,10 +1994,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
+        "h": 5,
         "w": 12,
         "x": 12,
-        "y": 65
+        "y": 67
       },
       "id": 80,
       "interval": "1s",
@@ -2066,7 +2024,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{ namespace=\"$namespace1\"}) by (pod) / sum(cluster:namespace:pod_cpu:active:kube_pod_container_resource_limits{ namespace=\"$namespace1\"}) by (pod)) * 100  ",
+          "expr": "(sum by(pod) (node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{namespace=\"$namespace2\", pod!=\"$soakpod\", pod!=\"$spillpod\"}) * 100) / sum by(pod) (cluster:namespace:pod_cpu:active:kube_pod_container_resource_limits{namespace=\"$namespace2\", pod!=\"$soakpod\", pod!=\"$spillpod\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "  ",
@@ -2108,7 +2066,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 2,
+        "h": 3,
         "w": 12,
         "x": 12,
         "y": 72
@@ -2180,10 +2138,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 2,
+        "h": 3,
         "w": 12,
         "x": 12,
-        "y": 74
+        "y": 75
       },
       "id": 37,
       "interval": "1s",
@@ -2313,7 +2271,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 76
+        "y": 78
       },
       "id": 2,
       "interval": "10s",
@@ -2461,7 +2419,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 76
+        "y": 78
       },
       "id": 55,
       "interval": "10s",
@@ -2524,7 +2482,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 84
+        "y": 86
       },
       "id": 44,
       "panels": [
@@ -2951,10 +2909,9 @@
     "list": [
       {
         "current": {
-          "isNone": true,
           "selected": false,
-          "text": "None",
-          "value": ""
+          "text": "myapp",
+          "value": "myapp"
         },
         "datasource": {
           "type": "prometheus",
@@ -2978,10 +2935,9 @@
       },
       {
         "current": {
-          "isNone": true,
           "selected": false,
-          "text": "None",
-          "value": ""
+          "text": "zerok",
+          "value": "zerok"
         },
         "datasource": {
           "type": "prometheus",
@@ -3006,37 +2962,8 @@
       {
         "current": {
           "selected": false,
-          "text": "Evaluate Concurrency",
-          "value": "Evaluate Concurrency"
-        },
-        "hide": 0,
-        "includeAll": false,
-        "label": "Demo Stage",
-        "multi": false,
-        "name": "demoStage",
-        "options": [
-          {
-            "selected": true,
-            "text": "Evaluate Concurrency",
-            "value": "Evaluate Concurrency"
-          },
-          {
-            "selected": false,
-            "text": "Rate Limit",
-            "value": "Rate Limit"
-          }
-        ],
-        "query": "Evaluate Concurrency, Rate Limit",
-        "queryValue": "",
-        "skipUrlSync": false,
-        "type": "custom"
-      },
-      {
-        "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
+          "text": "dep-zerok-b68f5c4f8-brzjs",
+          "value": "dep-zerok-b68f5c4f8-brzjs"
         },
         "datasource": {
           "type": "prometheus",
@@ -3061,10 +2988,9 @@
       },
       {
         "current": {
-          "isNone": true,
           "selected": false,
-          "text": "None",
-          "value": ""
+          "text": "dep-zerok-b68f5c4f8-brzjs",
+          "value": "dep-zerok-b68f5c4f8-brzjs"
         },
         "datasource": {
           "type": "prometheus",
@@ -3086,12 +3012,92 @@
         "skipUrlSync": false,
         "sort": 1,
         "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "1m_1800-3m_1800",
+          "value": "1m_1800-3m_1800"
+        },
+        "hide": 0,
+        "label": "App traffic",
+        "name": "app_traffic",
+        "options": [
+          {
+            "selected": true,
+            "text": "1m_1800-3m_1800",
+            "value": "1m_1800-3m_1800"
+          }
+        ],
+        "query": "1m_1800-3m_1800",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "2m_640-2m_920-1m_600-1m_600-1m_840-1m_840-1m_680-2m_760",
+          "value": "2m_640-2m_920-1m_600-1m_600-1m_840-1m_840-1m_680-2m_760"
+        },
+        "hide": 0,
+        "label": "Soak traffic",
+        "name": "soak_traffic",
+        "options": [
+          {
+            "selected": true,
+            "text": "2m_640-2m_920-1m_600-1m_600-1m_840-1m_840-1m_680-2m_760",
+            "value": "2m_640-2m_920-1m_600-1m_600-1m_840-1m_840-1m_680-2m_760"
+          }
+        ],
+        "query": "2m_640-2m_920-1m_600-1m_600-1m_840-1m_840-1m_680-2m_760",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "2m_640-2m_360-1m_680-1m_680-1m_440-1m_440-1m_600-2m_520",
+          "value": "2m_640-2m_360-1m_680-1m_680-1m_440-1m_440-1m_600-2m_520"
+        },
+        "hide": 0,
+        "label": "Spill traffic",
+        "name": "spill_traffic",
+        "options": [
+          {
+            "selected": true,
+            "text": "2m_640-2m_360-1m_680-1m_680-1m_440-1m_440-1m_600-2m_520",
+            "value": "2m_640-2m_360-1m_680-1m_680-1m_440-1m_440-1m_600-2m_520"
+          }
+        ],
+        "query": "2m_640-2m_360-1m_680-1m_680-1m_440-1m_440-1m_600-2m_520",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "1m",
+          "value": "1m"
+        },
+        "hide": 0,
+        "label": "k6 Timeunit",
+        "name": "time_unit",
+        "options": [
+          {
+            "selected": true,
+            "text": "1m",
+            "value": "1m"
+          }
+        ],
+        "query": "1m",
+        "skipUrlSync": false,
+        "type": "textbox"
       }
     ]
   },
   "time": {
-    "from": "2022-10-28T09:52:01.103Z",
-    "to": "2022-10-28T10:06:29.048Z"
+    "from": "now-5m",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -3110,6 +3116,6 @@
   "timezone": "",
   "title": "ZeroK Demo",
   "uid": "vN-hlAjnk",
-  "version": 3,
+  "version": 23,
   "weekStart": ""
 }
