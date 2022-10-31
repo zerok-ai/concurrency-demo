@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 29,
+  "id": 7,
   "links": [],
   "liveNow": true,
   "panels": [
@@ -113,8 +113,8 @@
       "gridPos": {
         "h": 3,
         "w": 2,
-        "x": 22,
-        "y": 2
+        "x": 0,
+        "y": 5
       },
       "id": 67,
       "options": {
@@ -123,7 +123,7 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "<br/>\n<a\n   href=\"#\"\n   onclick=\"\n   \twindow.open('http://demo-load-generator.getanton.com/start-concurrency-test?vus=300&mvus=300&timeunit=1m&ssoak=2m_640-2m_920-1m_600-1m_600-1m_840-1m_840-1m_680-2m_760&sspill=2m_640-2m_360-1m_680-1m_680-1m_440-1m_440-1m_600-2m_520', '_blank', 'toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400');\n      window.open('http://demo-load-generator.getanton.com/start/app?vus=200&mvus=200&rate=1800&stages=2m_220-6m_220&timeunit=1m', '_blank', 'toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=100,width=400,height=400');\"\n   style=\"\n      border-radius: 7px; \n      margin: 0.25rem; \n      border: 1px solid;\n      text-decoration: none; \n      cursor: pointer;\n      padding: 1rem 1.5rem; \n      width: 100px;\n      line-height: 10px;\n      font-size: 36px;\n      text-align: center;\"\n   >\n▶️\n</a>\n",
+        "content": "<br/>\n<a\n   href=\"http://demo-load-generator.getanton.com/start/app?vus=200&mvus=200&rate=1800&stages=2m_220-6m_220&timeunit=1m\"\n   style=\"\n      border-radius: 7px; \n      margin: 0.25rem; \n      border: 1px solid;\n      text-decoration: none; \n      cursor: pointer;\n      padding: 1rem 1.5rem; \n      width: 100px;\n      line-height: 10px;\n      font-size: 36px;\n      text-align: center;\"\n   >\n▶️\n</a>\n",
         "mode": "html"
       },
       "pluginVersion": "9.2.1",
@@ -160,7 +160,7 @@
       "gridPos": {
         "h": 3,
         "w": 2,
-        "x": 0,
+        "x": 2,
         "y": 5
       },
       "id": 57,
@@ -200,65 +200,25 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
       "gridPos": {
         "h": 3,
-        "w": 3,
+        "w": 2,
         "x": 12,
         "y": 5
       },
-      "id": 58,
+      "id": 83,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
         },
-        "textMode": "auto"
+        "content": "<br/>\n<a\n   href=\"http://demo-load-generator.getanton.com/start-concurrency-test?vus=300&mvus=300&timeunit=1m&ssoak=2m_640-2m_920-1m_600-1m_600-1m_840-1m_840-1m_680-2m_760&sspill=2m_640-2m_360-1m_680-1m_680-1m_440-1m_440-1m_600-2m_520\"\n   style=\"\n      border-radius: 7px; \n      margin: 0.25rem; \n      border: 1px solid;\n      text-decoration: none; \n      cursor: pointer;\n      padding: 1rem 1.5rem; \n      width: 100px;\n      line-height: 10px;\n      font-size: 36px;\n      text-align: center;\"\n   >\n▶️\n</a>\n",
+        "mode": "html"
       },
       "pluginVersion": "9.2.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "code",
-          "expr": "4",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Pod count (total)",
-      "type": "stat"
+      "transparent": true,
+      "type": "text"
     },
     {
       "datasource": {
@@ -289,14 +249,14 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 2,
-        "x": 15,
+        "w": 3,
+        "x": 14,
         "y": 5
       },
-      "id": 59,
+      "id": 58,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
+        "colorMode": "none",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -316,13 +276,13 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "1",
+          "expr": "4",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Soak Pod",
+      "title": "Pod count (total)",
       "type": "stat"
     },
     {
@@ -388,6 +348,71 @@
         }
       ],
       "title": "Spill Pods",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 19,
+        "y": 5
+      },
+      "id": 59,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "1",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Soak Pod",
       "type": "stat"
     },
     {
@@ -861,8 +886,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -926,8 +950,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1023,8 +1046,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1122,8 +1144,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1284,8 +1305,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1383,8 +1403,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1482,8 +1501,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1592,8 +1610,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1755,8 +1772,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1854,8 +1870,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1937,8 +1952,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2010,8 +2024,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2083,8 +2096,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2156,8 +2168,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2262,8 +2273,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2411,8 +2421,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2934,7 +2943,7 @@
       "type": "row"
     }
   ],
-  "refresh": false,
+  "refresh": "5s",
   "schemaVersion": 37,
   "style": "dark",
   "tags": [],
@@ -2942,9 +2951,10 @@
     "list": [
       {
         "current": {
+          "isNone": true,
           "selected": false,
-          "text": "myapp",
-          "value": "myapp"
+          "text": "None",
+          "value": ""
         },
         "datasource": {
           "type": "prometheus",
@@ -2968,9 +2978,10 @@
       },
       {
         "current": {
+          "isNone": true,
           "selected": false,
-          "text": "zerok",
-          "value": "zerok"
+          "text": "None",
+          "value": ""
         },
         "datasource": {
           "type": "prometheus",
@@ -3022,9 +3033,10 @@
       },
       {
         "current": {
+          "isNone": true,
           "selected": false,
-          "text": "dep-zerok-7b89f8ddb7-8gglg",
-          "value": "dep-zerok-7b89f8ddb7-8gglg"
+          "text": "None",
+          "value": ""
         },
         "datasource": {
           "type": "prometheus",
@@ -3049,9 +3061,10 @@
       },
       {
         "current": {
+          "isNone": true,
           "selected": false,
-          "text": "dep-zerok-7b89f8ddb7-8gglg",
-          "value": "dep-zerok-7b89f8ddb7-8gglg"
+          "text": "None",
+          "value": ""
         },
         "datasource": {
           "type": "prometheus",
@@ -3097,6 +3110,6 @@
   "timezone": "",
   "title": "ZeroK Demo",
   "uid": "vN-hlAjnk",
-  "version": 61,
+  "version": 3,
   "weekStart": ""
 }
