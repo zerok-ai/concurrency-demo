@@ -29,16 +29,18 @@ app.get('/start-concurrency-test', (req, res) => {
 
     //SOAK -  vus=2000&mvus=2000&rate=1800&stages=2m_200-1m_250-1m_275-1m_300-2m_300
     //SPILL - vus=2000&mvus=2000&rate=1800&stages=2m_200-1m_150-1m_125-1m_100-2m_100
-    var service = 'zk_soak';
-    runTestForService({ service, initialVUs, maxVUs, rate, stages: ssoak, duration, timeunit, concurrency }, (data) => {
+
+
+    const spillService = 'zk_spill';
+    runTestForService({ spillService, initialVUs, maxVUs, rate, stages: sspill, duration, timeunit, concurrency }, (data) => {
 
     });
 
-    service = 'zk_spill';
-    runTestForService({ service, initialVUs, maxVUs, rate, stages: sspill, duration, timeunit, concurrency }, (data) => {
+    const soakService = 'zk_soak';
+    runTestForService({ soakService, initialVUs, maxVUs, rate, stages: ssoak, duration, timeunit, concurrency }, (data) => {
 
     });
-
+   
     res.send('started');
 })
 
