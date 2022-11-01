@@ -1,6 +1,3 @@
-- op: add
-  path: /spec/selector/zk-route-mark
-  value: none
 - op: replace
   path: /metadata/name
   value: svc-app-zerok
