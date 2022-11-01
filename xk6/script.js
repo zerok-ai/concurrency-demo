@@ -150,6 +150,10 @@ function processStageIndex() {
   return stageIndex;
 }
 
+export function setup() {
+  console.log(options)
+}
+
 export function checkout() {
   const stageIndex = processStageIndex();
   const params = {};

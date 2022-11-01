@@ -142,6 +142,6 @@ spec:
                     key: x-local-rate-limit
                     value: 'true'
               token_bucket:
-                max_tokens: 10
-                tokens_per_fill: 10
+                max_tokens: 100
+                tokens_per_fill: 100
                 fill_interval: 1s
