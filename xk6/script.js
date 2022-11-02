@@ -52,7 +52,7 @@ function parseStages() {
     if (stage.length > 2) {
       var rateLimit = stage[2];
       
-      var limits = STAGES.split(':');
+      var limits = rateLimit.split(':');
       var checkoutLimit = 100;
       var couponLimit = 100;
       // if only one value is present, apply the limit to both the apis
