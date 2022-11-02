@@ -16,37 +16,55 @@ const POSSIBLE_SERVICES = {
 };
 
 //app, zk, zk-spill, zk-soak
-app.get('/start-concurrency-test', (req, res) => {
+app.get('/start-concurrent-tests', (req, res) => {
+    
     const queryParams = req.query;
     const initialVUs = (queryParams.vus) ? queryParams.vus : 1000;
     const maxVUs = (queryParams.mvus) ? queryParams.mvus : 1000;
     const rate = (queryParams.rate) ? queryParams.rate : 220;
     const duration = (queryParams.duration) ? queryParams.duration : '5m';
     const timeunit = (queryParams.timeunit) ? queryParams.timeunit : '1m';
-    const ssoak = (queryParams.ssoak) ? queryParams.ssoak : '1_0';
-    const sspill = (queryParams.sspill) ? queryParams.sspill : '1_0';
     const concurrency = (queryParams.concurrency) ? queryParams.concurrency : "";
-
-    //SOAK -  vus=2000&mvus=2000&rate=1800&stages=2m_200-1m_250-1m_275-1m_300-2m_300
-    //SPILL - vus=2000&mvus=2000&rate=1800&stages=2m_200-1m_150-1m_125-1m_100-2m_100
-
-
-    const spillService = 'zk_spill';
-    runTestForService({ spillService, initialVUs, maxVUs, rate, stages: sspill, duration, timeunit, concurrency }, (data) => {
-
-    });
-
-    const soakService = 'zk_soak';
-    runTestForService({ soakService, initialVUs, maxVUs, rate, stages: ssoak, duration, timeunit, concurrency }, (data) => {
-
-    });
+    const testTag = (queryParams.tag) ? queryParams.tag : "none";
+    
+    /**
+     * sample =  vus=2000&mvus=2000&rate=1800&stages=[[time]_[requests]_[ratelimit]]-[[time]_[requests]_[ratelimit]]_...
+     * where ratelimit is defined as -> [Rate For Checkout]:[Rate For Coupon]
+     */
    
+    if (queryParams.sapp){
+        console.log(" ")
+        var service = 'app';
+        runTestForService({ service, initialVUs, maxVUs, rate, stages: queryParams.sapp, duration, timeunit, concurrency, testTag }, (data) => {});
+    }
+ 
+    if (queryParams.szk) {
+
+        var service = 'zk';
+        runTestForService({ service, initialVUs, maxVUs, rate, stages: queryParams.szk, duration, timeunit, concurrency, testTag }, (data) => {});    
+
+    } 
+    
+    if (queryParams.ssoak) {
+        var service = 'zk_soak';
+        runTestForService({ service, initialVUs, maxVUs, rate, stages: queryParams.ssoak, duration, timeunit, concurrency, testTag }, (data) => {});
+
+    }
+
+    if (queryParams.sspill) {
+
+        var service = 'zk_spill';
+        runTestForService({ service, initialVUs, maxVUs, rate, stages: queryParams.sspill, duration, timeunit, concurrency, testTag }, (data) => {});
+        
+    }
+
     res.send('started');
 })
 
+
 function runTestForService(params, callback) {
 
-    const { service, initialVUs, maxVUs, rate, stages, duration, timeunit, concurrency } = params;
+    const { service, initialVUs, maxVUs, rate, stages, duration, timeunit, concurrency, testTag } = params;
     if (paused && POSSIBLE_SERVICES[service]) {
         callback('Tests are in paused state. Try resuming them!');
         return;
@@ -88,8 +106,9 @@ app.get('/start/:service', (req, res) => {
     const duration = (queryParams.duration) ? queryParams.duration : '5m';
     const timeunit = (queryParams.timeunit) ? queryParams.timeunit : '1m';
     const concurrency = (queryParams.concurrency) ? queryParams.concurrency : "";
+    const testTag = (queryParams.tag) ? queryParams.tag : "none";
 
-    runTestForService({ service, initialVUs, maxVUs, rate, stages, duration, timeunit, concurrency }, (data) => {
+    runTestForService({ service, initialVUs, maxVUs, rate, stages, duration, timeunit, concurrency, testTag }, (data) => {
         res.send(data);
     });
 })
@@ -189,12 +208,12 @@ app.listen(port, () => {
 })
 
 async function startK6(params) {
-    const { service, initialVUs, maxVUs, rate, stages, duration, timeunit, concurrency } = params;
+    const { service, initialVUs, maxVUs, rate, stages, duration, timeunit, concurrency, testTag } = params;
     //app, zk, zk-spill, zk-soak
     try {
         console.log("init test run - " + service);
         // const passwdContent = await execute("cat /etc/passwd");
-        execute(`sh ./run_xk6.sh ${service} ${initialVUs} ${maxVUs} ${rate} ${stages} ${duration} ${timeunit} ${concurrency}`,
+        execute(`sh ./run_xk6.sh ${service} ${initialVUs} ${maxVUs} ${rate} ${stages} ${duration} ${timeunit} ${concurrency} ${testTag}`,
             (err, stdout, stderr) => {
                 console.log(err, stdout, stderr)
                 if (err != null) {

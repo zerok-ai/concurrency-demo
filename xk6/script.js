@@ -12,7 +12,7 @@ const DURATION = __ENV.DURATION;
 const TIMEUNIT = __ENV.TIMEUNIT;
 const SERVICE = __ENV.SERVICE;
 const CONCURRENCY = __ENV.CONCURRENCY;
-// const STAGE_TAGS = __ENV.STAGE_TAGS;
+const TEST_TAG = __ENV.TEST_TAG;
 
 const initialVUs = INITIAL_VUS;
 const maxVUs = MAX_VUS;
@@ -47,9 +47,28 @@ function parseStages() {
     var requestssString = stage[1];
     var requests = parseInt(requestssString);
     var iterations = requests;
+
+    //  set the rate limits if present
     if (stage.length > 2) {
       var rateLimit = stage[2];
-      stageToRateLimit[index + ''] = rateLimit;
+      
+      var limits = STAGES.split(':');
+      var checkoutLimit = 100;
+      var couponLimit = 100;
+      // if only one value is present, apply the limit to both the apis
+      if (limits.length > 0) {
+        checkoutLimit = limits[0];
+        couponLimit = limits[1];
+      }
+      
+      // if 2 values are present, apply the second limit to coupon
+      if (limits.length > 1) {
+        couponLimit = limits[1];
+      }     
+
+      stageToRateLimit[index + ''] = {"checkoutLimit":checkoutLimit, "couponLimit":couponLimit};
+
+      console.log(stageToRateLimit[index + ''])
     }
     const transformedStage = { duration: duration, target: iterations };
     scenarioStage.push(transformedStage);
@@ -145,7 +164,7 @@ const verticalScaleCount = {
 function processStageIndex() {
   var stageIndex = getCurrentStageIndex();
   if (concurrencies[stageIndex]) {
-    myGauge.add(concurrencies[stageIndex]);
+    myGauge.add(concurrencies[stageIndex], { run_id: TEST_TAG });
   }
   return stageIndex;
 }
@@ -156,30 +175,38 @@ export function setup() {
 
 export function checkout() {
   const stageIndex = processStageIndex();
-  const params = {};
+  const params = {
+      tags: {
+        run_id: TEST_TAG,
+      },
+  };
   if (stageToRateLimit[stageIndex + '']) {
     params['headers'] = {
-      'rate-limit': stageToRateLimit[stageIndex + ''] + ''
+      'rate-limit': stageToRateLimit[stageIndex + ''].checkoutLimit + ''
     }
   }
   const res = http.get('http://' + HOST + '/checkout?count=' + verticalScaleCount['checkout'], params);
   scenarioMetrics.forEach((metric) => {
-    myTrend[CHECKOUT_SCENARIO][metric].add(res.timings[metric], {});
+    myTrend[CHECKOUT_SCENARIO][metric].add(res.timings[metric], { run_id: TEST_TAG });
   })
   sleep(1);
 }
 
 export function coupons() {
   const stageIndex = processStageIndex();
-  const params = {};
+  const params = {
+    tags: {
+      run_id: TEST_TAG,
+    },
+  };
   if (stageToRateLimit[stageIndex + '']) {
     params['headers'] = {
-      'rate-limit': stageToRateLimit[stageIndex + ''] + ''
+      'rate-limit': stageToRateLimit[stageIndex + ''].couponLimit + ''
     }
   }
   const res = http.get('http://' + HOST + '/coupons?count=' + verticalScaleCount['coupons'], params);
   scenarioMetrics.forEach((metric) => {
-    myTrend[COUPONS_SCENARIO][metric].add(res.timings[metric], {});
+    myTrend[COUPONS_SCENARIO][metric].add(res.timings[metric], { run_id: TEST_TAG });
   })
   sleep(1);
 }
@@ -189,9 +216,13 @@ export function teardown(data) {
   //SERVICE
   console.log('Tearing down test started for ' + SERVICE);
   scenarioMetrics.forEach((metric) => {
-    myTrend[CHECKOUT_SCENARIO][metric].add(0, {});
-    myTrend[COUPONS_SCENARIO][metric].add(0, {});
+    myTrend[CHECKOUT_SCENARIO][metric].add(0, { run_id: TEST_TAG });
+    myTrend[COUPONS_SCENARIO][metric].add(0, { run_id: TEST_TAG });
   })
-  const res = http.get('http://demo-load-generator.getanton.com/mark-closed/' + SERVICE);
+  const res = http.get('http://demo-load-generator.getanton.com/mark-closed/' + SERVICE, {
+    tags: {
+      run_id: TEST_TAG,
+    },
+  });
   console.log(res);
 }
