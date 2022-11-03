@@ -726,7 +726,7 @@
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": false
+          "showLegend": true
         },
         "tooltip": {
           "mode": "single",
@@ -739,8 +739,8 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "editorMode": "builder",
-          "expr": "sum(k6_custom_duration_avg{scenario=~\"app_.*\"})",
+          "editorMode": "code",
+          "expr": "(k6_custom_duration_avg{scenario=~\"app_.*\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "app",
@@ -767,7 +767,7 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "left",
-            "axisSoftMax": 800,
+            "axisSoftMax": 600,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 0,
@@ -777,7 +777,7 @@
               "tooltip": false,
               "viz": false
             },
-            "lineInterpolation": "linear",
+            "lineInterpolation": "smooth",
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
@@ -869,10 +869,10 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum (k6_custom_duration_avg{scenario=~\"zk_spill_.*\"})",
+          "expr": "(k6_custom_duration_avg{scenario=~\"zk_spill_.*\"})",
           "hide": false,
           "interval": "",
-          "legendFormat": "spill",
+          "legendFormat": "spill - {{scenario}}",
           "range": true,
           "refId": "A"
         },
@@ -881,10 +881,10 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "editorMode": "builder",
-          "expr": "sum(k6_custom_duration_avg{scenario=~\"zk_soak_.*\"})",
+          "editorMode": "code",
+          "expr": "(k6_custom_duration_avg{scenario=~\"zk_soak_.*\"})",
           "hide": false,
-          "legendFormat": "soak",
+          "legendFormat": "soak - {{scenario}}",
           "range": true,
           "refId": "B"
         }
@@ -1832,8 +1832,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1955,8 +1954,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2078,8 +2076,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2193,8 +2190,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2260,8 +2256,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2329,8 +2324,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2411,8 +2405,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -2484,8 +2477,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -2557,8 +2549,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -2630,8 +2621,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -2690,7 +2680,7 @@
       "type": "row"
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2698,420 +2688,419 @@
         "y": 78
       },
       "id": 44,
-      "panels": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "max": 200,
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 140
-                  }
-                ]
-              },
-              "unit": "decmbytes"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 6,
-            "w": 12,
-            "x": 0,
-            "y": 5
-          },
-          "id": 40,
-          "interval": "1m",
-          "links": [],
-          "options": {
-            "displayMode": "lcd",
-            "minVizHeight": 10,
-            "minVizWidth": 0,
-            "orientation": "horizontal",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showUnfilled": true
-          },
-          "pluginVersion": "9.2.1",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "editorMode": "code",
-              "expr": "sum(container_memory_working_set_bytes{job=\"kubelet\", metrics_path=\"/metrics/cadvisor\", namespace=\"$namespace1\", container!=\"\", image!=\"\"} / 1000000) by (pod)",
-              "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "  ",
-              "range": true,
-              "refId": "A",
-              "step": 10
-            }
-          ],
-          "title": "Memory Usage per Pod - $namespace1",
-          "type": "bargauge"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "max": 200,
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 140
-                  }
-                ]
-              },
-              "unit": "decmbytes"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 6,
-            "w": 12,
-            "x": 12,
-            "y": 5
-          },
-          "id": 53,
-          "interval": "1m",
-          "links": [],
-          "options": {
-            "displayMode": "lcd",
-            "minVizHeight": 10,
-            "minVizWidth": 0,
-            "orientation": "horizontal",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showUnfilled": true
-          },
-          "pluginVersion": "9.2.1",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "editorMode": "code",
-              "expr": "sum(container_memory_working_set_bytes{job=\"kubelet\", metrics_path=\"/metrics/cadvisor\", namespace=\"$namespace2\", container!=\"\", image!=\"\"} / 1000000) by (pod)",
-              "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "  ",
-              "range": true,
-              "refId": "A",
-              "step": 10
-            }
-          ],
-          "title": "Memory Usage per Pod - $namespace2",
-          "type": "bargauge"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "axisSoftMin": 0,
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "bytes"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Memory Utilization"
-                },
-                "properties": [
-                  {
-                    "id": "custom.fillOpacity",
-                    "value": 100
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 11
-          },
-          "id": 5,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "8.5.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "editorMode": "code",
-              "expr": "sum by(namespace) (container_memory_working_set_bytes{job=\"kubelet\", metrics_path=\"/metrics/cadvisor\", namespace=\"$namespace1\", container!=\"POD\", image!=\"\"})",
-              "interval": "",
-              "legendFormat": "Memory Utilization",
-              "range": true,
-              "refId": "Memory Utilization"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "editorMode": "code",
-              "expr": "sum(\n    kube_pod_container_resource_requests{job=\"kube-state-metrics\", namespace=\"$namespace1\", resource=\"memory\"}\n)\n",
-              "hide": false,
-              "legendFormat": "Requests",
-              "range": true,
-              "refId": "Requests"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "editorMode": "code",
-              "expr": "sum(\n    kube_pod_container_resource_limits{job=\"kube-state-metrics\", namespace=\"$namespace1\", resource=\"memory\"}\n)\n",
-              "hide": false,
-              "legendFormat": "Limits",
-              "range": true,
-              "refId": "Limits"
-            }
-          ],
-          "title": "Memory Utilization - $namespace1",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "axisSoftMin": 0,
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "bytes"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Memory Utilization"
-                },
-                "properties": [
-                  {
-                    "id": "custom.fillOpacity",
-                    "value": 100
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 11
-          },
-          "id": 6,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "8.5.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "editorMode": "code",
-              "expr": "sum by(namespace) (container_memory_working_set_bytes{job=\"kubelet\", metrics_path=\"/metrics/cadvisor\", namespace=\"$namespace2\", container!=\"POD\", image!=\"\"})",
-              "interval": "",
-              "legendFormat": "Memory Utilization",
-              "range": true,
-              "refId": "Memory Utilization"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "editorMode": "code",
-              "expr": "sum(\n    kube_pod_container_resource_requests{job=\"kube-state-metrics\", namespace=\"$namespace2\", resource=\"memory\"}\n)\n",
-              "hide": false,
-              "legendFormat": "Requests",
-              "range": true,
-              "refId": "Requests"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "editorMode": "code",
-              "expr": "sum(\n    kube_pod_container_resource_limits{job=\"kube-state-metrics\", namespace=\"$namespace2\", resource=\"memory\"}\n)\n",
-              "hide": false,
-              "legendFormat": "Limits",
-              "range": true,
-              "refId": "Limits"
-            }
-          ],
-          "title": "Memory Utilization - $namespace2",
-          "type": "timeseries"
-        }
-      ],
+      "panels": [],
       "title": "Memory charts",
       "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 200,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 140
+              }
+            ]
+          },
+          "unit": "decmbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 79
+      },
+      "id": 40,
+      "interval": "1m",
+      "links": [],
+      "options": {
+        "displayMode": "lcd",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(container_memory_working_set_bytes{job=\"kubelet\", metrics_path=\"/metrics/cadvisor\", namespace=\"$namespace1\", container!=\"\", image!=\"\"} / 1000000) by (pod)",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "legendFormat": "  ",
+          "range": true,
+          "refId": "A",
+          "step": 10
+        }
+      ],
+      "title": "Memory Usage per Pod - $namespace1",
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 200,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 140
+              }
+            ]
+          },
+          "unit": "decmbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 79
+      },
+      "id": 53,
+      "interval": "1m",
+      "links": [],
+      "options": {
+        "displayMode": "lcd",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(container_memory_working_set_bytes{job=\"kubelet\", metrics_path=\"/metrics/cadvisor\", namespace=\"$namespace2\", container!=\"\", image!=\"\"} / 1000000) by (pod)",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "legendFormat": "  ",
+          "range": true,
+          "refId": "A",
+          "step": 10
+        }
+      ],
+      "title": "Memory Usage per Pod - $namespace2",
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMin": 0,
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Memory Utilization"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 100
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 85
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.5.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by(namespace) (container_memory_working_set_bytes{job=\"kubelet\", metrics_path=\"/metrics/cadvisor\", namespace=\"$namespace1\", container!=\"POD\", image!=\"\"})",
+          "interval": "",
+          "legendFormat": "Memory Utilization",
+          "range": true,
+          "refId": "Memory Utilization"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n    kube_pod_container_resource_requests{job=\"kube-state-metrics\", namespace=\"$namespace1\", resource=\"memory\"}\n)\n",
+          "hide": false,
+          "legendFormat": "Requests",
+          "range": true,
+          "refId": "Requests"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n    kube_pod_container_resource_limits{job=\"kube-state-metrics\", namespace=\"$namespace1\", resource=\"memory\"}\n)\n",
+          "hide": false,
+          "legendFormat": "Limits",
+          "range": true,
+          "refId": "Limits"
+        }
+      ],
+      "title": "Memory Utilization - $namespace1",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMin": 0,
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Memory Utilization"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 100
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 85
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.5.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by(namespace) (container_memory_working_set_bytes{job=\"kubelet\", metrics_path=\"/metrics/cadvisor\", namespace=\"$namespace2\", container!=\"POD\", image!=\"\"})",
+          "interval": "",
+          "legendFormat": "Memory Utilization",
+          "range": true,
+          "refId": "Memory Utilization"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n    kube_pod_container_resource_requests{job=\"kube-state-metrics\", namespace=\"$namespace2\", resource=\"memory\"}\n)\n",
+          "hide": false,
+          "legendFormat": "Requests",
+          "range": true,
+          "refId": "Requests"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n    kube_pod_container_resource_limits{job=\"kube-state-metrics\", namespace=\"$namespace2\", resource=\"memory\"}\n)\n",
+          "hide": false,
+          "legendFormat": "Limits",
+          "range": true,
+          "refId": "Limits"
+        }
+      ],
+      "title": "Memory Utilization - $namespace2",
+      "type": "timeseries"
     }
   ],
   "refresh": "5s",
@@ -3175,8 +3164,8 @@
       {
         "current": {
           "selected": false,
-          "text": "dep-zerok-5d4d4f4d55-7x72t",
-          "value": "dep-zerok-5d4d4f4d55-7x72t"
+          "text": "dep-zerok-756cbb9795-49mdz",
+          "value": "dep-zerok-756cbb9795-49mdz"
         },
         "datasource": {
           "type": "prometheus",
@@ -3202,8 +3191,8 @@
       {
         "current": {
           "selected": false,
-          "text": "dep-zerok-5d4d4f4d55-9jjxz",
-          "value": "dep-zerok-5d4d4f4d55-9jjxz"
+          "text": "dep-zerok-756cbb9795-49mdz",
+          "value": "dep-zerok-756cbb9795-49mdz"
         },
         "datasource": {
           "type": "prometheus",
@@ -3229,27 +3218,27 @@
       {
         "current": {
           "selected": false,
-          "text": "2m_800-9m_800",
-          "value": "2m_800-9m_800"
+          "text": "1m_25-6m_25",
+          "value": "1m_25-6m_25"
         },
-        "hide": 2,
+        "hide": 0,
         "name": "app_traffic",
         "options": [
           {
-            "selected": true,
-            "text": "2m_800-9m_800",
-            "value": "2m_800-9m_800"
+            "selected": false,
+            "text": "2m_800-2m_800-2m_1000-8m_1000",
+            "value": "2m_800-2m_800-2m_1000-8m_1000"
           }
         ],
-        "query": "2m_800-9m_800",
+        "query": "1m_25-6m_25",
         "skipUrlSync": false,
         "type": "textbox"
       },
       {
         "current": {
           "selected": false,
-          "text": "2m_200-2m_200-1m_260-2m_280-1m_320-1s_100-1m_260-2m_200",
-          "value": "2m_200-2m_200-1m_260-2m_280-1m_320-1s_100-1m_260-2m_200"
+          "text": "1m_100-39m_100",
+          "value": "1m_100-39m_100"
         },
         "hide": 0,
         "label": "Soak traffic",
@@ -3257,19 +3246,19 @@
         "options": [
           {
             "selected": true,
-            "text": "2m_200-2m_200-1m_260-2m_280-1m_320-1s_100-1m_260-2m_200",
-            "value": "2m_200-2m_200-1m_260-2m_280-1m_320-1s_100-1m_260-2m_200"
+            "text": "1m_100-39m_100",
+            "value": "1m_100-39m_100"
           }
         ],
-        "query": "2m_200-2m_200-1m_260-2m_280-1m_320-1s_100-1m_260-2m_200",
+        "query": "1m_100-39m_100",
         "skipUrlSync": false,
         "type": "textbox"
       },
       {
         "current": {
           "selected": false,
-          "text": "2m_200-2m_200-1m_140-2m_120-1m_80-1s_100-1m_140-2m_200",
-          "value": "2m_200-2m_200-1m_140-2m_120-1m_80-1s_100-1m_140-2m_200"
+          "text": "4m_200-36m_230",
+          "value": "4m_200-36m_230"
         },
         "hide": 0,
         "label": "Spill traffic",
@@ -3277,11 +3266,11 @@
         "options": [
           {
             "selected": true,
-            "text": "2m_200-2m_200-1m_140-2m_120-1m_80-1s_100-1m_140-2m_200",
-            "value": "2m_200-2m_200-1m_140-2m_120-1m_80-1s_100-1m_140-2m_200"
+            "text": "4m_200-36m_230",
+            "value": "4m_200-36m_230"
           }
         ],
-        "query": "2m_200-2m_200-1m_140-2m_120-1m_80-1s_100-1m_140-2m_200",
+        "query": "4m_200-36m_230",
         "skipUrlSync": false,
         "type": "textbox"
       },
@@ -3315,9 +3304,9 @@
         "name": "concurrencies",
         "options": [
           {
-            "selected": true,
-            "text": "200_210_220_230_230",
-            "value": "200_210_220_230_230"
+            "selected": false,
+            "text": "180_198_207_204_205_207",
+            "value": "180_198_207_204_205_207"
           }
         ],
         "query": "200_210_220_230_230",
@@ -3355,9 +3344,9 @@
         "name": "qos_zk_traffic",
         "options": [
           {
-            "selected": true,
-            "text": "2m_800-4m_1200_7:3-4m_1200_7:3",
-            "value": "2m_800-4m_1200_7:3-4m_1200_7:3"
+            "selected": false,
+            "text": "2m_800-4m_1200_3:7-4m_1200_3:7",
+            "value": "2m_800-4m_1200_3:7-4m_1200_3:7"
           }
         ],
         "query": "2m_800-4m_1200_7:3-4m_1200_7:3",
@@ -3375,7 +3364,7 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -3395,6 +3384,6 @@
   "timezone": "",
   "title": "ZeroK Demo",
   "uid": "vN-hlAjnk",
-  "version": 95,
+  "version": 111,
   "weekStart": ""
 }
