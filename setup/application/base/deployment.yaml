@@ -13,6 +13,10 @@ spec:
       dep: default
   template:
     metadata:
+      annotations:
+        prometheus.io/path: "/status/format/prometheus"
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "80"
       labels:
         app: myapp
         dep: default

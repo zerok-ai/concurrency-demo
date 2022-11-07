@@ -33,6 +33,7 @@ fi
 if [ "$1" = "delete" ]
 then
    kubectl delete namespace myapp
+   kubectl delete namespace myapp-hpa
    kubectl delete namespace zerok
    exit 1;
 fi
@@ -40,9 +41,11 @@ fi
 # app with 3 replicas in ns:- default
 kubectl apply -k status-quo 
 
+# app with 3 replicas in ns:- myapp-hpa
+# kubectl apply -k status-quo-hpa 
+
 # app with 3 replicas in anton - default setup in ns:- zerok
 kubectl apply -k zerok 
-# kubectl kustomize zerok 
 
 if [ $STAGE == 1 ]
 then

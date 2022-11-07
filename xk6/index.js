@@ -13,11 +13,12 @@ const POSSIBLE_SERVICES = {
     'zk': false,
     'zk_spill': false,
     'zk_soak': false,
+    'app_hpa': false,
 };
 
 //app, zk, zk-spill, zk-soak
 app.get('/start-concurrent-tests', (req, res) => {
-    
+
     const queryParams = req.query;
     const initialVUs = (queryParams.vus) ? queryParams.vus : 1000;
     const maxVUs = (queryParams.mvus) ? queryParams.mvus : 1000;
@@ -26,36 +27,36 @@ app.get('/start-concurrent-tests', (req, res) => {
     const timeunit = (queryParams.timeunit) ? queryParams.timeunit : '1m';
     const concurrency = (queryParams.concurrency) ? queryParams.concurrency : "";
     const testTag = (queryParams.tag) ? queryParams.tag : "none";
-    
+
     /**
      * sample =  vus=2000&mvus=2000&rate=1800&stages=[[time]_[requests]_[ratelimit]]-[[time]_[requests]_[ratelimit]]_...
      * where ratelimit is defined as -> [Rate For Checkout]:[Rate For Coupon]
      */
-   
-    if (queryParams.sapp){
+
+    if (queryParams.sapp) {
         console.log(" ")
         var service = 'app';
-        runTestForService({ service, initialVUs, maxVUs, rate, stages: queryParams.sapp, duration, timeunit, concurrency, testTag }, (data) => {});
+        runTestForService({ service, initialVUs, maxVUs, rate, stages: queryParams.sapp, duration, timeunit, concurrency, testTag }, (data) => { });
     }
- 
+
     if (queryParams.szk) {
 
         var service = 'zk';
-        runTestForService({ service, initialVUs, maxVUs, rate, stages: queryParams.szk, duration, timeunit, concurrency, testTag }, (data) => {});    
+        runTestForService({ service, initialVUs, maxVUs, rate, stages: queryParams.szk, duration, timeunit, concurrency, testTag }, (data) => { });
 
-    } 
-    
+    }
+
     if (queryParams.ssoak) {
         var service = 'zk_soak';
-        runTestForService({ service, initialVUs, maxVUs, rate, stages: queryParams.ssoak, duration, timeunit, concurrency, testTag }, (data) => {});
+        runTestForService({ service, initialVUs, maxVUs, rate, stages: queryParams.ssoak, duration, timeunit, concurrency, testTag }, (data) => { });
 
     }
 
     if (queryParams.sspill) {
 
         var service = 'zk_spill';
-        runTestForService({ service, initialVUs, maxVUs, rate, stages: queryParams.sspill, duration, timeunit, concurrency, testTag }, (data) => {});
-        
+        runTestForService({ service, initialVUs, maxVUs, rate, stages: queryParams.sspill, duration, timeunit, concurrency, testTag }, (data) => { });
+
     }
 
     res.send('started');

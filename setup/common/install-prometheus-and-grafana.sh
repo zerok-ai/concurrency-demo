@@ -25,3 +25,6 @@ $setupfolder/common/install-grafana-dashboard.sh concurrency-demo
 # install Loki 
 # helm upgrade --install loki grafana/loki-distributed -n monitoring
 
+#Install prometheus adapter
+# helm install -f $setupfolder/common/yaml/values/prometheus-adapter.yaml 
+# helm install myapp-hpa-adapter --set prometheus.url=http://prom-kube-prometheus-stack-prometheus.monitoring.svc.cluster.local  prometheus-community/prometheus-adapter --namespace myapp-hpa

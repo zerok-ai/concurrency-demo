@@ -2,7 +2,7 @@
   path: /spec
   value:
     rules:
-      - host: demo-app-zerok-soak.getanton.com
+      - host: avin-demo-app-zerok-soak.getanton.com
         http:
           paths:
           - backend:

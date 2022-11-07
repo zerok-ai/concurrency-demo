@@ -2,12 +2,12 @@
   path: /spec
   value:
     rules:
-      - host: avin-demo-app-zerok-spill.getanton.com
+      - host: avin-demo-app-hpa.getanton.com
         http:
           paths:
           - backend:
               service:
-                name: svc-app-zerok-spill
+                name: svc-app-hpa
                 port: 
                   number: 80
             path: /.*

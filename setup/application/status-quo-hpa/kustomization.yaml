@@ -1,0 +1,45 @@
+# resources:
+#   - prom-ad-configmap.yaml
+#   - prom-ad-deployment.yaml
+#   - prom-ad-service.yaml
+#   - prom-ad-custom-metrics.yaml
+resources:
+  - hpav2.yaml
+bases:
+  - ../gke
+nameSuffix: -app-hpa
+namespace: myapp-hpa
+commonLabels:
+  app: myapp
+  dep: default
+patchesJson6902:
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: dep
+    path: deployment-patch.yaml
+  - target:
+      version: v1
+      kind: Service
+      name: svc
+    path: service-patch.yaml
+  - target:
+      group: networking.k8s.io
+      version: v1
+      kind: Ingress
+      name: ing
+    path: ingress-patch.yaml
+patchesStrategicMerge:
+  - |-
+    apiVersion: monitoring.coreos.com/v1
+    kind: ServiceMonitor
+    metadata:
+      name: svcm
+    $patch: delete
+  # - |-
+  #   apiVersion: networking.k8s.io/v1
+  #   kind: Ingress
+  #   metadata:
+  #     name: ing
+  #   $patch: delete

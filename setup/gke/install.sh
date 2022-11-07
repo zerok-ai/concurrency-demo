@@ -20,7 +20,8 @@ done
 
 if [ -z "$project" ]
 then
-   project="black-scope-358204"
+   # project="black-scope-358204"
+   project="zerok-dev"
 fi
 
 if [ -z "$cluster" ]

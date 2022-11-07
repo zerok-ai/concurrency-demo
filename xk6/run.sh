@@ -30,6 +30,10 @@ case $service in
     HOST='svc-app-zerok-soak.zerok.svc.cluster.local';
     ;;
 
+  app_hpa)
+    HOST='svc-app-hpa.myapp-hpa.svc.cluster.local';
+    ;;
+
   *)
     echo -n "unknown"
     exit 1;

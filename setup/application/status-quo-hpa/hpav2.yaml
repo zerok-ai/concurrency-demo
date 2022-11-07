@@ -1,0 +1,43 @@
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa-custom
+  labels:
+    dep: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: dep-hpa
+  minReplicas: 4
+  maxReplicas: 15
+  metrics:
+  - type: Pods
+    pods:
+      metricName: checkout_counter
+      targetAverageValue: "1650"
+
+  # - type: Object
+  #   object:
+  #     metric:
+  #       name: requests-per-second
+  #     describedObject:
+  #       apiVersion: networking.k8s.io/v1
+  #       kind: Ingress
+  #       name: ing-app-hpa
+  #     target:
+  #       type: Value
+  #       value: 50
+
+  # - type: Pods
+  #   pods:
+  #     metricName: myapplication_api_response_time_avg
+  #     targetAverageValue: "500"
+
+  # - type: Pods
+  #   pods:
+  #     metric:
+  #       name: custom_prometheus
+  #     target:
+  #       type: AverageValue
+  #       averageValue: 20

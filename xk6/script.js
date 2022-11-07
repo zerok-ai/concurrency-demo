@@ -51,7 +51,7 @@ function parseStages() {
     //  set the rate limits if present
     if (stage.length > 2) {
       var rateLimit = stage[2];
-      
+
       var limits = rateLimit.split(':');
       var checkoutLimit = 100;
       var couponLimit = 100;
@@ -60,13 +60,13 @@ function parseStages() {
         checkoutLimit = limits[0];
         couponLimit = limits[1];
       }
-      
+
       // if 2 values are present, apply the second limit to coupon
       if (limits.length > 1) {
         couponLimit = limits[1];
-      }     
+      }
 
-      stageToRateLimit[index + ''] = {"checkoutLimit":checkoutLimit, "couponLimit":couponLimit};
+      stageToRateLimit[index + ''] = { "checkoutLimit": checkoutLimit, "couponLimit": couponLimit };
 
       console.log(stageToRateLimit[index + ''])
     }
@@ -176,9 +176,9 @@ export function setup() {
 export function checkout() {
   const stageIndex = processStageIndex();
   const params = {
-      tags: {
-        run_id: TEST_TAG,
-      },
+    tags: {
+      run_id: TEST_TAG,
+    },
   };
   if (stageToRateLimit[stageIndex + '']) {
     params['headers'] = {
@@ -219,7 +219,7 @@ export function teardown(data) {
     myTrend[CHECKOUT_SCENARIO][metric].add(0, { run_id: TEST_TAG });
     myTrend[COUPONS_SCENARIO][metric].add(0, { run_id: TEST_TAG });
   })
-  const res = http.get('http://demo-load-generator.getanton.com/mark-closed/' + SERVICE, {
+  const res = http.get('http://avin-demo-load-generator.getanton.com/mark-closed/' + SERVICE, {
     tags: {
       run_id: TEST_TAG,
     },

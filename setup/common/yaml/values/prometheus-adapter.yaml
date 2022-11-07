@@ -1,0 +1,16 @@
+prometheus:
+  url: http://prom-kube-prometheus-stack-prometheus.monitoring.svc.cluster.local
+  port: 9090
+rules:
+  custom:
+  - seriesQuery: '{__name__=~"myapp_api_response_time_.*",namespace!="",pod!=""}'
+    resources:
+      overrides:
+        namespace:
+          resource: namespace
+        pod:
+          resource: pod
+    name:
+      matches: ^(.*)
+      as: "myapp_api_response_time_avg"
+    metricsQuery: 1000 * (sum(rate(myapp_api_response_time_sum[5m]) > 0) by (<<.GroupBy>>) / sum(rate(myapp_api_response_time_count[5m]) > 0) by (<<.GroupBy>>))
