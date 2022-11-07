@@ -7,7 +7,7 @@ helpFunction()
 }
 
 # while getopts "a:b:c:" opt
-while getopts "p" opt
+while getopts "pc" opt
 do
    case "$opt" in
       p ) project="$OPTARG" ;;
@@ -39,7 +39,7 @@ gcloud beta container \
     --release-channel "regular" --machine-type "e2-medium" --image-type "COS_CONTAINERD" \
     --disk-type "pd-standard" --disk-size "100" --metadata disable-legacy-endpoints=true \
     --scopes "https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" \
-    --max-pods-per-node "110" --num-nodes "3" --logging=SYSTEM,WORKLOAD --monitoring=SYSTEM \
+    --max-pods-per-node "110" --num-nodes "4" --logging=SYSTEM,WORKLOAD --monitoring=SYSTEM \
     --enable-ip-alias --network "projects/$project/global/networks/default" --subnetwork "projects/$project/regions/us-central1/subnetworks/default" \
     --no-enable-intra-node-visibility --default-max-pods-per-node "110" --no-enable-master-authorized-networks \
     --addons HorizontalPodAutoscaling,HttpLoadBalancing,GcePersistentDiskCsiDriver \
@@ -61,23 +61,15 @@ gcloud container node-pools update default-pool \
     --quiet
 
 echo ''
-echo '---------------------- Enabling autoscaling on default-pool'
-gcloud container clusters update "$cluster" \
-    --enable-autoscaling \
-    --node-pool="default-pool" \
-    --min-nodes=0 \
-    --max-nodes=3 \
-    --project "$project" \
-    --zone "us-central1-c"
-
-echo ''
 echo '---------------------- Creating worker cluster'
 gcloud container node-pools create "worker" \
-    --enable-autoscaling --min-nodes "0" --max-nodes "4" \
+    --num-nodes "1" \
     --node-labels "role=worker" \
+    --cluster "$cluster" --zone "us-central1-c" \
+    --image-type "COS_CONTAINERD" \
     --node-taints "dedicated=worker:NoSchedule" \
     --project "$project" \
-    --cluster "$cluster" --zone "us-central1-c" 
+    --machine-type=custom-4-10240
 
 
 echo ''

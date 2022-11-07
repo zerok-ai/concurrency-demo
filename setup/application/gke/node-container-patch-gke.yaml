@@ -1,6 +1,14 @@
 - op: add
   path: /spec/template/spec
   value:
+    nodeSelector: {
+      role: worker
+    }
+    tolerations:
+    - key: "dedicated"
+      operator: "Equal"
+      value: "worker"
+      effect: "NoSchedule"
     containers:
       - name: myapp
         image: us-central1-docker.pkg.dev/zerok-dev/multi-stage-demo/zerokdemo:latest
