@@ -2,6 +2,15 @@ prometheus:
   url: http://prom-kube-prometheus-stack-prometheus.monitoring.svc.cluster.local
   port: 9090
 rules:
+  default: true
+  external:
+  - seriesQuery: '{__name__=~"^some_metric_count$"}'
+    resources:
+      template: <<.Resource>>
+    name:
+      matches: ""
+      as: "my_external_metric"
+    metricsQuery: sum(<<.Series>>{<<.LabelMatchers>>}) by (<<.GroupBy>>)
   custom:
   - seriesQuery: '{__name__=~"myapp_api_response_time_.*",namespace!="",pod!=""}'
     resources:

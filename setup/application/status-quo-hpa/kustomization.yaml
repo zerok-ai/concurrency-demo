@@ -3,8 +3,8 @@
 #   - prom-ad-deployment.yaml
 #   - prom-ad-service.yaml
 #   - prom-ad-custom-metrics.yaml
-resources:
-  - hpav2.yaml
+# resources:
+#   - hpav2.yaml
 bases:
   - ../gke
 nameSuffix: -app-hpa
