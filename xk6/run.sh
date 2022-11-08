@@ -9,6 +9,7 @@ stages=$5
 duration=$6
 timeunit=$7
 concurrency=$8
+testtag=$9
 HOST="script.js"
 
 case $service in
@@ -38,6 +39,6 @@ esac
 PROM_URL=http://prom-kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090/api/v1/write
 
 K6_PROMETHEUS_REMOTE_URL=$PROM_URL \
-./k6 run -e CONCURRENCY=$concurrency -e SERVICE=$service -e TIMEUNIT=$timeunit -e DURATION=$duration -e STAGES=$stages -e RATE=$rate -e PROMETHEUS_REMOTE_URL=$PROM_URL -e INITIAL_VUS=$initialVUs -e MAX_VUS=$maxVUs -e HOST=$HOST -e CHECKOUT_SCENARIO=$1_checkout -e COUPONS_SCENARIO=$1_coupons script.js \
+./k6 run -e CONCURRENCY=$concurrency -e SERVICE=$service -e TIMEUNIT=$timeunit -e DURATION=$duration -e STAGES=$stages -e RATE=$rate -e PROMETHEUS_REMOTE_URL=$PROM_URL -e INITIAL_VUS=$initialVUs -e MAX_VUS=$maxVUs -e HOST=$HOST -e CHECKOUT_SCENARIO=$1_checkout -e COUPONS_SCENARIO=$1_coupons -e TEST_TAG=testtag script.js \
     -o output-prometheus-remote \
     --tag run=$(date +%F_%H-%M-%S)
