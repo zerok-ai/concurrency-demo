@@ -11,8 +11,8 @@
       effect: "NoSchedule"
     containers:
       - name: myapp
-        image: us-central1-docker.pkg.dev/zerok-dev/multi-stage-demo/zerokdemo:latest
-        imagePullPolicy: IfNotPresent
+        image: us-central1-docker.pkg.dev/black-scope-358204/multi-stage-demo/zerokdemo:latest
+        imagePullPolicy: Always
         ports:
         - name: m-http
           containerPort: 3000

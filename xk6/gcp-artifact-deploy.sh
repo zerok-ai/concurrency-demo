@@ -1,5 +1,5 @@
 LOCATION="us-central1"
-PROJECT_ID="zerok-dev"
+PROJECT_ID="black-scope-358204"
 REPOSITORY="multi-stage-demo"
 IMAGE="xk6-api"
 TAG="latest"

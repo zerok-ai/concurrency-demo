@@ -27,7 +27,7 @@ spec:
         effect: "NoSchedule"
       containers:
         - name: k6-load-generator
-          image: us-central1-docker.pkg.dev/zerok-dev/zerok-concurrency-demo-cluster/xk6-api
+          image: us-central1-docker.pkg.dev/black-scope-358204/zerok-concurrency-demo-cluster/xk6-api
           imagePullPolicy: Always
           ports:
           - name: m-http
