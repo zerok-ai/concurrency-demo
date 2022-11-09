@@ -9,7 +9,7 @@ metadata:
     # nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
-  - host: avin-demo-load-generator.getanton.com
+  - host: nginx.local
     http:
       paths:
       - backend:

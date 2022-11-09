@@ -1,0 +1,18 @@
+- op: replace
+  path: /metadata/name
+  value: dep-zerok
+- op: replace
+  path: /spec/replicas
+  value: 4
+# - op: add
+#   path: /spec/template/metadata/labels/zk-route-mark
+#   value: none
+# - op: replace
+#   path: /spec/template/spec/containers/0/resources
+#   value: 
+#     requests: 
+#       cpu: 155m
+#       memory: 190Mi
+#     limits:
+#       cpu: 175m
+#       memory: 220Mi 

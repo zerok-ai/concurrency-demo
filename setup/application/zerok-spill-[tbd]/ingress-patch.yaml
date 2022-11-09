@@ -2,7 +2,7 @@
   path: /spec
   value:
     rules:
-      - host: avin-demo-app-zerok-spill.getanton.com
+      - host: app-zerok-spill.local
         http:
           paths:
           - backend:

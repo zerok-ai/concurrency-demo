@@ -1,5 +1,5 @@
 bases:
-  - ../zerok
+  - ../zerok-minikube
 patchesJson6902:
   - target:
       version: v1

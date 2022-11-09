@@ -227,10 +227,10 @@ spec:
         - name: tmp-volume
           emptyDir: {}
       serviceAccountName: kubernetes-dashboard
-      nodeSelector: {
-        "kubernetes.io/os": linux,
-        role: system
-      }
+      # nodeSelector: {
+      #   "kubernetes.io/os": linux,
+      #   role: system
+      # }
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
         - key: node-role.kubernetes.io/master
@@ -297,10 +297,10 @@ spec:
             runAsUser: 1001
             runAsGroup: 2001
       serviceAccountName: kubernetes-dashboard
-      nodeSelector: {
-        "kubernetes.io/os": linux,
-        role: system
-      }
+      # nodeSelector: {
+      #   "kubernetes.io/os": linux,
+      #   role: system
+      # }
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
         - key: node-role.kubernetes.io/master

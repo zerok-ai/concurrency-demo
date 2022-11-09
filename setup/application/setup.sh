@@ -3,28 +3,46 @@
 helpFunction()
 {
    echo ""
-   echo "Usage: $0 [apply|delete]"
+   echo "Usage: -c [apply|delete] -p gke|minikube"
    exit 1 # Exit script after printing help
 }
 
 STAGE=1
+clusterProvider="gke"
 
-while getopts "hs" opt
-do
-   case "$opt" in
-      s ) STAGE="$OPTARG" ;;#clusterProvider="$OPTARG" ;; # Print helpFunction in case parameter is non-existent
-      h ) helpFunction ;; # Print helpFunction in case parameter is non-existent
-      ? ) helpFunction ;; # Print helpFunction in case parameter is non-existent
-   esac
+while [ $# -ne 0 ]; do
+    case "$1" in
+        -c)
+             command=$2
+             shift; shift
+             ;;
+        -p)
+             clusterProvider=$2
+             shift; shift
+             ;;
+        -h)
+             helpFunction
+             exit 2
+
+             ;;
+        -*)
+             echo "Unknown option: $1" >&2
+             helpFunction
+             exit 2
+             ;;
+        *)
+             break
+             ;;
+    esac
 done
 
-if [ -z "$1" ]
+if [ -z "$command" ]
 then
    helpFunction
    exit 1;
 fi
 
-if [ "$1" != "apply" ] && [ "$1" != "delete" ]
+if [ "$command" != "apply" ] && [ "$command" != "delete" ]
 then
     helpFunction
     exit 1;
@@ -39,13 +57,13 @@ then
 fi
 
 # app with 3 replicas in ns:- default
-kubectl apply -k status-quo 
+kubectl apply -k status-quo-$clusterProvider
 
-# app with 3 replicas in ns:- myapp-hpa
-# kubectl apply -k status-quo-hpa 
+# # app with 3 replicas in ns:- myapp-hpa
+# # kubectl apply -k status-quo-hpa 
 
-# app with 3 replicas in anton - default setup in ns:- zerok
-kubectl apply -k zerok 
+# # app with 3 replicas in anton - default setup in ns:- zerok
+kubectl apply -k zerok-$clusterProvider
 
 if [ $STAGE == 1 ]
 then
@@ -69,8 +87,8 @@ then
       
       echo ""
       echo "--- starting soak and spill service"
-      kubectl apply -k zerok-soak
-      kubectl apply -k zerok-spill
+      kubectl apply -k zerok-soak-$clusterProvider
+      kubectl apply -k zerok-spill-$clusterProvider
 
       echo ""
       echo "--- marking the pods for soak"

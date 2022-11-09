@@ -1,3 +1,5 @@
+bases:
+  - ../gke
 namespace: zerok
 nameSuffix: -app-zerok
 patchesJson6902:

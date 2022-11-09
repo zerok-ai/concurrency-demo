@@ -1,3 +1,5 @@
+bases:
+  - ../minikube
 namespace: zerok
 nameSuffix: -app-zerok
 patchesJson6902:

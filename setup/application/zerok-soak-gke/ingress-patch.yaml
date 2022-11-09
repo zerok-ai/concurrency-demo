@@ -2,12 +2,12 @@
   path: /spec
   value:
     rules:
-      - host: app-hpa.local
+      - host: app-zerok-soak.local
         http:
           paths:
           - backend:
               service:
-                name: svc-app-hpa
+                name: svc-app-zerok-soak
                 port: 
                   number: 80
             path: /.*

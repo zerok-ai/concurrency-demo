@@ -17,14 +17,14 @@ spec:
         app: myapp
         dep: default
     spec:
-      nodeSelector: {
-        role: k6
-      }
-      tolerations:
-      - key: "dedicated"
-        operator: "Equal"
-        value: "k6"
-        effect: "NoSchedule"
+      # nodeSelector: {
+      #   role: k6
+      # }
+      # tolerations:
+      # - key: "dedicated"
+      #   operator: "Equal"
+      #   value: "k6"
+      #   effect: "NoSchedule"
       containers:
         - name: k6-load-generator
           image: us-central1-docker.pkg.dev/zerok-dev/multi-stage-demo/xk6-api:latest

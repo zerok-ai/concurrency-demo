@@ -17,9 +17,9 @@ spec:
         app: myapp
         dep: default
     spec:
-      nodeSelector: {
-        role: k6
-      }
+      # nodeSelector: {
+      #   role: k6
+      # }
       tolerations:
       - key: "dedicated"
         operator: "Equal"
@@ -27,8 +27,8 @@ spec:
         effect: "NoSchedule"
       containers:
         - name: k6-load-generator
-          image: us-central1-docker.pkg.dev/zerok-dev/zerok-concurrency-test-cluster/xk6-api
-          imagePullPolicy: Always
+          image: us-central1-docker.pkg.dev/zerok-dev/multi-stage-demo/xk6-api:latest
+          imagePullPolicy: IfNotPresent
           ports:
           - name: m-http
             containerPort: 3000

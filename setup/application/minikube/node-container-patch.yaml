@@ -1,0 +1,22 @@
+- op: add
+  path: /spec/template/spec
+  value:
+    tolerations:
+    - key: "dedicated"
+      operator: "Equal"
+      value: "worker"
+      effect: "NoSchedule"
+    containers:
+      - name: myapp
+        image: us-central1-docker.pkg.dev/zerok-dev/multi-stage-demo/zerokdemo:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: m-http
+          containerPort: 3000
+        resources: 
+          requests: 
+            cpu: 150m
+            memory: 170Mi
+          # limits:
+          #   cpu: 200m
+          #   memory: 250Mi

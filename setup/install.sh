@@ -61,12 +61,12 @@ fi
 if [[ $SERVICES == 1 ]]; then
     echo "installing service"
     cd $setupfolder/application
-    ./setup.sh apply
+    ./setup.sh -c apply -p $clusterProvider
     cd $setupfolder
 fi
 
 if [[ $K6 == 1 ]]; then
     # install loadtest
-    kubectl apply -k load-test-gke
+    kubectl apply -k load-test-$clusterProvider
 fi
 
