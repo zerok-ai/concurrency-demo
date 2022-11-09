@@ -18,20 +18,22 @@ DEFAULTS=0
 SERVICES=0
 K6=0
 ISTIO=0
+POST_SERVICE_INSTALL_CLUSTER=0
 
 # while getopts "hac:dsk" opt
-while getopts "hp:akcsdi" opt
+while getopts "hp:akcsdit" opt
 do
    case "$opt" in
-      p ) clusterProvider="$OPTARG" ;;#clusterProvider="$OPTARG" ;; # Print helpFunction in case parameter is non-existent
-      a ) INSTALL_CLUSTER=1; DEFAULTS=1; SERVICES=1; K6=1; ISTIO=1 ;; # Setup everything
+      p ) clusterProvider="$OPTARG" ;;
+      a ) INSTALL_CLUSTER=1; DEFAULTS=1; SERVICES=1; K6=1; ISTIO=1; POST_SERVICE_INSTALL_CLUSTER=1 ;; # Setup everything
       c ) INSTALL_CLUSTER=1 ;; # Install cluster
-      d ) DEFAULTS=1 ;; # Print helpFunction in case parameter is non-existent
-      d ) ISTIO=1 ;; # Print helpFunction in case parameter is non-existent
+      d ) DEFAULTS=1 ;; 
+      i ) ISTIO=1 ;; 
       k ) K6=1 ;; # Setup K6
-      s ) SERVICES=1 ;; # Print helpFunction in case parameter is non-existent
-      h ) helpFunction ;; # Print helpFunction in case parameter is non-existent
-      ? ) helpFunction ;; # Print helpFunction in case parameter is non-existent
+      s ) SERVICES=1 ;; 
+      t ) POST_SERVICE_INSTALL_CLUSTER=1 ;;
+      h ) helpFunction ;; 
+      ? ) helpFunction ;; 
    esac
 done
 
@@ -82,5 +84,8 @@ if [[ $ISTIO == 1 ]]; then
 
 fi
 
-# echo "attaching ingress IPs to domains"
-# sh ./$clusterProvider/setIPs.sh
+if [[ $POST_SERVICE_INSTALL_CLUSTER == 1 ]]; then
+    echo "installing post-service installation"
+    sh ./$clusterProvider/postservice-install.sh
+fi
+
