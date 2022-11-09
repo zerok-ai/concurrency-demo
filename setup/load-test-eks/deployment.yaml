@@ -17,9 +17,9 @@ spec:
         app: myapp
         dep: default
     spec:
-      # nodeSelector: {
-      #   role: k6
-      # }
+      nodeSelector: {
+        role: k6
+      }
       tolerations:
       - key: "dedicated"
         operator: "Equal"

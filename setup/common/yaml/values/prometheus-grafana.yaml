@@ -7,15 +7,15 @@ prometheus:
     serviceMonitorSelector: {}
     serviceMonitorNamespaceSelector: {}
     enableRemoteWriteReceiver: true
-    # nodeSelector: {
-    #   role: system
-    # }
+    nodeSelector: {
+      role: system
+    }
 
-# alertmanager:
-#   alertmanagerSpec: 
-#     nodeSelector: {
-#       role: system
-#     }
+alertmanager:
+  alertmanagerSpec: 
+    nodeSelector: {
+      role: system
+    }
 
 grafana:
   sidecar:
@@ -26,13 +26,13 @@ grafana:
       provider:
         allowUiUpdates: true
 
-# prometheusOperator:
-#   alertmanagerSpec: 
-#     nodeSelector: {
-#       role: system
-#     }
-#   admissionWebhooks: 
-#     patch:
-#       nodeSelector: {
-#         role: system
-#       }
+prometheusOperator:
+  alertmanagerSpec: 
+    nodeSelector: {
+      role: system
+    }
+  admissionWebhooks: 
+    patch:
+      nodeSelector: {
+        role: system
+      }
