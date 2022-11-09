@@ -57,48 +57,48 @@ then
 fi
 
 # app with 3 replicas in ns:- default
-kubectl apply -k status-quo-$clusterProvider
+# kubectl apply -k status-quo-$clusterProvider
 
 # # app with 3 replicas in ns:- myapp-hpa
-# # kubectl apply -k status-quo-hpa 
+kubectl apply -k status-quo-hpa-gke
 
 # # app with 3 replicas in anton - default setup in ns:- zerok
-kubectl apply -k zerok-$clusterProvider
+# kubectl apply -k zerok-$clusterProvider
 
-if [ $STAGE == 1 ]
-then
+# if [ $STAGE == 1 ]
+# then
    
-   # mark pods
-   # soakPod=$(kubectl -n zerok get pods --output=jsonpath={.items..metadata.name})
-   # echo ${soakPod}
+#    # mark pods
+#    # soakPod=$(kubectl -n zerok get pods --output=jsonpath={.items..metadata.name})
+#    # echo ${soakPod}
 
-   # index=0
-   # for pod in $(kubectl -n zerok get pods --output=jsonpath={.items..metadata.name});
-   # do
-   #    echo "pod Name: ${pod}"
-   #    echo  
-   # done
+#    # index=0
+#    # for pod in $(kubectl -n zerok get pods --output=jsonpath={.items..metadata.name});
+#    # do
+#    #    echo "pod Name: ${pod}"
+#    #    echo  
+#    # done
 
-   soakPod=$(kubectl -n zerok get pods --output=jsonpath={.items[0].metadata.name})
-   spillPod=$(kubectl -n zerok get pods --output=jsonpath={.items[1].metadata.name})
+#    soakPod=$(kubectl -n zerok get pods --output=jsonpath={.items[0].metadata.name})
+#    spillPod=$(kubectl -n zerok get pods --output=jsonpath={.items[1].metadata.name})
 
-   if [ $soakPod != $spillPod ]
-   then
+#    if [ $soakPod != $spillPod ]
+#    then
       
-      echo ""
-      echo "--- starting soak and spill service"
-      kubectl apply -k zerok-soak-$clusterProvider
-      kubectl apply -k zerok-spill-$clusterProvider
+#       echo ""
+#       echo "--- starting soak and spill service"
+#       kubectl apply -k zerok-soak-$clusterProvider
+#       kubectl apply -k zerok-spill-$clusterProvider
 
-      echo ""
-      echo "--- marking the pods for soak"
-      kubectl label pod -n zerok $soakPod zk-route-mark=soak --overwrite
+#       echo ""
+#       echo "--- marking the pods for soak"
+#       kubectl label pod -n zerok $soakPod zk-route-mark=soak --overwrite
 
-      echo "--- marking the pods for spill"
-      kubectl label pod -n zerok $spillPod zk-route-mark=spill --overwrite
+#       echo "--- marking the pods for spill"
+#       kubectl label pod -n zerok $spillPod zk-route-mark=spill --overwrite
 
-   else
-      echo "[Error] Unable to mark pods! Only one pod found."
-   fi
+#    else
+#       echo "[Error] Unable to mark pods! Only one pod found."
+#    fi
 
-fi
+# fi

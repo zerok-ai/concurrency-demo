@@ -12,10 +12,13 @@ spec:
   minReplicas: 4
   maxReplicas: 15
   metrics:
-  - type: Pods
-    pods:
-      metricName: checkout_counter
-      targetAverageValue: "1650"
+  - type: Object
+    object:
+      metricName: http_req_per_second_per_replica
+      target:
+        kind: Namespace
+        name: app-ingress
+      targetValue: 50m
 
   # - type: Object
   #   object:
