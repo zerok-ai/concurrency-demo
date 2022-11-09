@@ -17,19 +17,23 @@ INSTALL_CLUSTER=0
 DEFAULTS=0
 SERVICES=0
 K6=0
+ISTIO=0
+POST_SERVICE_INSTALL_CLUSTER=0
 
 # while getopts "hac:dsk" opt
-while getopts "hp:akcsd" opt
+while getopts "hp:akcsdit" opt
 do
    case "$opt" in
-      a ) INSTALL_CLUSTER=1; DEFAULTS=1; SERVICES=1; K6=1 ;; # Setup everything
-      k ) K6=1 ;; # Setup K6
+      p ) clusterProvider="$OPTARG" ;;
+      a ) INSTALL_CLUSTER=1; DEFAULTS=1; SERVICES=1; K6=1; ISTIO=1; POST_SERVICE_INSTALL_CLUSTER=1 ;; # Setup everything
       c ) INSTALL_CLUSTER=1 ;; # Install cluster
-      s ) SERVICES=1 ;; # Print helpFunction in case parameter is non-existent
-      d ) DEFAULTS=1 ;; # Print helpFunction in case parameter is non-existent
-      p ) clusterProvider="$OPTARG" ;;#clusterProvider="$OPTARG" ;; # Print helpFunction in case parameter is non-existent
-      h ) helpFunction ;; # Print helpFunction in case parameter is non-existent
-      ? ) helpFunction ;; # Print helpFunction in case parameter is non-existent
+      d ) DEFAULTS=1 ;; 
+      i ) ISTIO=1 ;; 
+      k ) K6=1 ;; # Setup K6
+      s ) SERVICES=1 ;; 
+      t ) POST_SERVICE_INSTALL_CLUSTER=1 ;;
+      h ) helpFunction ;; 
+      ? ) helpFunction ;; 
    esac
 done
 
@@ -68,5 +72,20 @@ fi
 if [[ $K6 == 1 ]]; then
     # install loadtest
     kubectl apply -k load-test-$clusterProvider
+fi
+
+if [[ $ISTIO == 1 ]]; then
+
+    # install istio configs
+    sh $setupfolder/istio/setup.sh
+
+    # Enable istio on app and zk namespaces
+    sh $setupfolder/istio/enable-istio.sh
+
+fi
+
+if [[ $POST_SERVICE_INSTALL_CLUSTER == 1 ]]; then
+    echo "installing post-service installation"
+    sh ./$clusterProvider/postservice-install.sh
 fi
 

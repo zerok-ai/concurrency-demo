@@ -6,3 +6,5 @@ sh $setupfolder/common/install-prometheus-and-grafana.sh
 echo '###################### Installing ingress controller'
 sh $setupfolder/common/install-ingress-controller.sh
 
+# install istio
+sh $setupfolder/common/install-istio.sh
