@@ -2,7 +2,7 @@
   path: /spec
   value:
     rules:
-      - host: app-hpa.local
+      - host: demo-app-hpa.getanton.com
         http:
           paths:
           - backend:

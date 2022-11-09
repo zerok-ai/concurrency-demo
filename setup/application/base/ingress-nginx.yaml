@@ -8,7 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-  - host: app.local
+  - host: demo-app.getanton.com
     http:
       paths:
       - backend:
