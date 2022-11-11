@@ -8,8 +8,6 @@ const apiMetrics = require('prometheus-api-metrics');
 var indexRouter = require('./routes/index');
 var healthCheckRouter = require('./routes/hc');
 var garbageCollectorRouter = require('./routes/garbageCollectorRouter');
-var couponsRouter = require('./routes/coupons');
-var checkoutRouter = require('./routes/checkout');
 var fireRouter = require('./routes/fire');
 
 var app = express();
@@ -23,9 +21,9 @@ app.use(apiMetrics({ metricsPrefix: "loadtest_" }));
 app.use('/', indexRouter);
 app.use('/hc', healthCheckRouter);
 app.use('/gc', garbageCollectorRouter);
-app.use('/coupons', couponsRouter);
-app.use('/checkout', checkoutRouter);
-// app.use('/fire', fireRouter);
+// app.use('/coupons', couponsRouter);
+// app.use('/checkout', checkoutRouter);
+app.use('/fire', fireRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

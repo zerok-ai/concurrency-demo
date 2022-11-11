@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep
+  labels:
+    app: zerok-controller
+    dep: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zerok-controller
+      dep: default
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: "/status/format/prometheus"
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "80"
+      labels:
+        app: zerok-controller
+        dep: default

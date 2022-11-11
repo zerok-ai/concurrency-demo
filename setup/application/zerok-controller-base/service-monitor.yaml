@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: svcm
+  labels:
+    app: zerok-controller
+spec:
+  selector:
+    matchLabels:
+      app: zerok-controller
+  endpoints:
+  - port: m-http
+    path: /metrics
+  namespaceSelector:
+    any: true

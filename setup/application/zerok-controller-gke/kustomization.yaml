@@ -1,0 +1,14 @@
+bases:
+  - ../zerok-controller-base
+nameSuffix: -zerok-controller
+namespace: zerok-controller
+commonLabels:
+  app: zerok-controller
+  dep: default
+patchesJson6902:
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: dep
+    path: node-container-patch.yaml
