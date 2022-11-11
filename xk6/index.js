@@ -230,9 +230,10 @@ async function startK6(params) {
         var dateString = date.getUTCFullYear() +"/"+ (date.getUTCMonth()+1) +"/"+ date.getUTCDate() + " " + date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds();
 
         let command = `ulimit -n 65536;
-        K6_PROMETHEUS_REMOTE_URL="${PROM_URL}" ./k6 run --no-connection-reuse -o output-prometheus-remote -e CONCURRENCY="${concurrency}"  -e SERVICE="${service}" -e TIMEUNIT="${timeunit}" -e DURATION="${duration}" -e STAGES="${stages}" -e RATE=${rate} -e PROMETHEUS_REMOTE_URL="${PROM_URL}" -e INITIAL_VUS="${initialVUs}" -e MAX_VUS="${maxVUs}" -e HOST="${host}" -e SCENARIO="${service}" -e TEST_TAG="${testTag}" --tag run="${dateString}" script.js 2>&1 | tee "lastrun-${service}.log" `;
-        
-        console.log("command: " + command);
+        K6_PROMETHEUS_REMOTE_URL="${PROM_URL}" \
+        ./k6 run --no-connection-reuse -o output-prometheus-remote -e CONCURRENCY="${concurrency}"  -e SERVICE="${service}" -e TIMEUNIT="${timeunit}" -e DURATION="${duration}" -e STAGES="${stages}" -e RATE=${rate} -e PROMETHEUS_REMOTE_URL="${PROM_URL}" -e INITIAL_VUS="${initialVUs}" -e MAX_VUS="${maxVUs}" -e HOST="${host}" -e SCENARIO="${service}" -e TEST_TAG="${testTag}" --tag run="${dateString}" script.js 2>&1 | tee "lastrun-${service}.log" `;
+
+        console.log("-- command: " + command);
         execute(command, (err, stdout, stderr) => {
                 console.log(err, stdout, stderr)
                 if (err != null) {

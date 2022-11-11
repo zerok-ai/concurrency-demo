@@ -11,6 +11,7 @@ const STAGES = __ENV.STAGES;
 const DURATION = __ENV.DURATION;
 const TIMEUNIT = __ENV.TIMEUNIT;
 const SERVICE = __ENV.SERVICE;
+const SCENARIO = (__ENV.SCENARIO) ? __ENV.SCENARIO : __ENV.SERVICE;
 const CONCURRENCY = __ENV.CONCURRENCY;
 const TEST_TAG = __ENV.TEST_TAG;
 
@@ -81,8 +82,8 @@ function parseStages() {
 // 6400/4 - pod
 
 const HOST = __ENV.HOST;
-const CHECKOUT_SCENARIO = __ENV.CHECKOUT_SCENARIO;//app-checkout, zk-checkout
-const COUPONS_SCENARIO = __ENV.COUPONS_SCENARIO;//app-coupons, zk-coupons
+const CHECKOUT_SCENARIO = SCENARIO + "_checkout"; //app_checkout, zk_checkout
+const COUPONS_SCENARIO = SCENARIO + "_coupons";
 
 var myTrend = {};
 var myGauge = new Gauge('concurrency');
@@ -135,22 +136,8 @@ function createScenarios() {
 }
 
 export const options = {
-  noConnectionReuse: true,
   discardResponseBodies: true,
   scenarios: createScenarios(),
-  ext: {
-    loadimpact: {
-      apm: [
-        {
-          provider: 'prometheus',
-          remoteWriteURL: PROMETHEUS_REMOTE_URL,
-          includeDefaultMetrics: true,
-          includeTestRunId: true,
-          resampleRate: 3,
-        },
-      ],
-    },
-  }
 };
 
 const verticalScaleCount = {
