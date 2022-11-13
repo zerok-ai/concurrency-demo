@@ -77,10 +77,6 @@ function parseStages() {
   });
 }
 
-// 3200 - per API
-// 6400 - app
-// 6400/4 - pod
-
 const HOST = __ENV.HOST;
 const CHECKOUT_SCENARIO = SCENARIO + "_checkout"; //app_checkout, zk_checkout
 const COUPONS_SCENARIO = SCENARIO + "_coupons";
@@ -176,7 +172,7 @@ export function checkout() {
   scenarioMetrics.forEach((metric) => {
     myTrend[CHECKOUT_SCENARIO][metric].add(res.timings[metric], { run_id: TEST_TAG });
   })
-  sleep(1);
+  sleep(.5);
 }
 
 export function coupons() {
@@ -195,7 +191,7 @@ export function coupons() {
   scenarioMetrics.forEach((metric) => {
     myTrend[COUPONS_SCENARIO][metric].add(res.timings[metric], { run_id: TEST_TAG });
   })
-  sleep(1);
+  sleep(.5);
 }
 
 export function teardown(data) {
