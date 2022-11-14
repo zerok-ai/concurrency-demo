@@ -60,8 +60,8 @@ fi
 kubectl apply -k status-quo-$clusterProvider
 
 # # app with 3 replicas in ns:- myapp-hpa
-kubectl apply -k status-quo-hpa-$clusterProvider
-kubectl apply -k zerok-controller-$clusterProvider
+# kubectl apply -k status-quo-hpa-$clusterProvider
+# kubectl apply -k zerok-controller-$clusterProvider
 # kubectl apply -k status-quo-hpa-gke-test
 
 # # app with 3 replicas in anton - default setup in ns:- zerok
