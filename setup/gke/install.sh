@@ -29,14 +29,15 @@ then
    cluster="multi-stage-demo"
 fi
 
+zone="us-central1-c"
+
 #create cluster
 echo '---------------------- Creating cluster'
 # exit 1
 
 gcloud beta container \
-    --project "$project" clusters create "$cluster" \
-    --zone "us-central1-c" --no-enable-basic-auth \
-    --release-channel "regular" --machine-type "e2-medium" --image-type "COS_CONTAINERD" \
+    clusters create "$cluster" --zone "$zone" --project "$project" \
+    --no-enable-basic-auth --release-channel "regular" --machine-type "e2-medium" --image-type "COS_CONTAINERD" \
     --disk-type "pd-standard" --disk-size "100" --metadata disable-legacy-endpoints=true \
     --scopes "https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" \
     --max-pods-per-node "110" --num-nodes "4" --logging=SYSTEM,WORKLOAD --monitoring=SYSTEM \
@@ -44,20 +45,18 @@ gcloud beta container \
     --no-enable-intra-node-visibility --default-max-pods-per-node "110" --no-enable-master-authorized-networks \
     --addons HorizontalPodAutoscaling,HttpLoadBalancing,GcePersistentDiskCsiDriver \
     --enable-autoupgrade --enable-autorepair --max-surge-upgrade 1 --max-unavailable-upgrade 0 --enable-shielded-nodes \
-    --node-locations "us-central1-c"
+    --node-locations "$zone"
 
 # get cluster credentials in kubeconfig
 gcloud components update
-gcloud container clusters get-credentials "$cluster" --zone "us-central1-c" --project "$project"
+gcloud container clusters get-credentials "$cluster" --zone "$zone" --project "$project"
 
 
 echo ''
 echo '---------------------- Updating default-pool'
 gcloud container node-pools update default-pool \
     --node-labels "role=system" \
-    --zone "us-central1-c" \
-    --cluster "$cluster" \
-    --project "$project" \
+    --cluster "$cluster" --zone "$zone" --project "$project" \
     --quiet
 
 echo ''
@@ -65,10 +64,9 @@ echo '---------------------- Creating worker cluster'
 gcloud container node-pools create "worker" \
     --num-nodes "1" \
     --node-labels "role=worker" \
-    --cluster "$cluster" --zone "us-central1-c" \
     --image-type "COS_CONTAINERD" \
     --node-taints "dedicated=worker:NoSchedule" \
-    --project "$project" \
+    --cluster "$cluster" --zone "$zone" --project "$project" \
     --machine-type=custom-4-10240
 
 
@@ -77,8 +75,7 @@ echo '---------------------- Creating xk6 cluster'
 gcloud container node-pools create "k6" \
     --num-nodes "1" \
     --node-labels "role=k6"\
-    --cluster "$cluster" --zone "us-central1-c" \
     --image-type "UBUNTU_CONTAINERD" \
     --node-taints "dedicated=k6:NoSchedule" \
-    --project "$project" \
+    --cluster "$cluster" --zone "$zone" --project "$project" \
     --machine-type=custom-4-10240

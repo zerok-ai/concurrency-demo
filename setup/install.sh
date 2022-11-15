@@ -76,12 +76,15 @@ fi
 
 if [[ $ISTIO == 1 ]]; then
 
+    cd $setupfolder/istio
+
     # install istio configs
-    sh $setupfolder/istio/setup.sh
+    sh setup.sh
 
     # Enable istio on app and zk namespaces
-    sh $setupfolder/istio/enable-istio.sh
+    sh enable-istio.sh
 
+    cd $setupfolder
 fi
 
 if [[ $POST_SERVICE_INSTALL_CLUSTER == 1 ]]; then
